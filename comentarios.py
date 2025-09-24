@@ -1,21 +1,16 @@
-def cadastrar_comentario():
-    id_comentario = input("ID comentário: ")
-    id_tarefa = input("ID tarefa: ")
-    id_usuario = input("ID usuário: ")
-    conteudo = input("Conteúdo: ")
-    data_comentario = input("Data comentário: ")
-    criado_em = input("Criado em: ")
-    comentario = {
-        "id_comentario": id_comentario,
-        "id_tarefa": id_tarefa,
-        "id_usuario": id_usuario,
-        "conteudo": conteudo,
-        "data_comentario": data_comentario,
-        "criado_em": criado_em
-    }
-    return comentario
+print("Cadastro de Comentário")
 
-def mostrar_comentario(c):
-    print("Comentário:", c["id_comentario"])
-    print(" Usuário:", c["id_usuario"])
-    print(" Texto:", c["conteudo"])
+id_comentario = input("ID do comentário: ")
+id_tarefa = input("ID da tarefa: ")
+id_usuario = input("ID do usuário: ")
+comentario = input("Comentário: ")
+data_comentario = input("Data do comentário: ")
+criado_em = input("Criado em: ")
+
+print("\n--- Comentário cadastrado ---")
+print("ID:", id_comentario)
+print("Tarefa:", id_tarefa)
+print("Usuário:", id_usuario)
+print("Comentário:", comentario)
+print("Data:", data_comentario)
+print("Criado em:", criado_em)
