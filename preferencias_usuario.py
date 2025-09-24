@@ -1,0 +1,18 @@
+print("Cadastro de Preferências do Usuário")
+
+id_preferencias_usuario = input("ID da preferência: ")
+id_usuario = input("ID do usuário: ")
+tema_pu = input("Tema: ")
+not_email_pu = input("Notificação por email (sim/não): ")
+not_push_pu = input("Notificação por push (sim/não): ")
+lembrete_padrao_pu = input("Lembrete padrão (número): ")
+pu_criada_em = input("Criado em: ")
+
+print("\n--- Preferência cadastrada ---")
+print("ID Preferência:", id_preferencias_usuario)
+print("Usuário:", id_usuario)
+print("Tema:", tema_pu)
+print("Email:", not_email_pu)
+print("Push:", not_push_pu)
+print("Lembrete padrão:", lembrete_padrao_pu)
+print("Criado em:", pu_criada_em)
