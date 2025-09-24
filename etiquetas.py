@@ -1,16 +1,14 @@
-def cadastrar_etiqueta():
-    id_etiqueta = input("ID etiqueta: ")
-    nome = input("Nome: ")
-    cor = input("Cor: ")
-    criada_em = input("Criada em: ")
-    etiqueta = {
-        "id_etiqueta": id_etiqueta,
-        "nome": nome,
-        "cor": cor,
-        "criada_em": criada_em
-    }
-    return etiqueta
+print("Cadastro de Etiqueta")
 
-def mostrar_etiqueta(e):
-    print("Etiqueta:", e["id_etiqueta"])
-    print(" Nome:", e["nome"])
+id_etiqueta = input("ID da etiqueta: ")
+nome_etiqueta = input("Nome da etiqueta: ")
+cor_etiqueta = input("Cor da etiqueta: ")
+id_usuario = input("ID do usuário: ")
+criado_em = input("Criado em: ")
+
+print("\n--- Etiqueta cadastrada ---")
+print("ID:", id_etiqueta)
+print("Nome:", nome_etiqueta)
+print("Cor:", cor_etiqueta)
+print("Usuário:", id_usuario)
+print("Criado em:", criado_em)
