@@ -1,0 +1,16 @@
+print("Cadastro de Colaboração")
+
+id_colab = input("ID da colaboração: ")
+id_tarefa = input("ID da tarefa: ")
+id_usuario = input("ID do usuário: ")
+permissao = input("Permissão: ")
+data_convite = input("Data do convite: ")
+criado_em = input("Criado em: ")
+
+print("\n--- Colaboração cadastrada ---")
+print("ID:", id_colab)
+print("Tarefa:", id_tarefa)
+print("Usuário:", id_usuario)
+print("Permissão:", permissao)
+print("Convite:", data_convite)
+print("Criado em:", criado_em)

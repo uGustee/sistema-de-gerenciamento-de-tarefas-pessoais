@@ -1,0 +1,16 @@
+print("Cadastro de Subtarefa")
+
+id_subtarefa = input("ID da subtarefa: ")
+id_tarefa = input("ID da tarefa: ")
+descricao = input("Descrição: ")
+concluida = input("Concluída? (sim/não): ")
+ordem = input("Ordem (número): ")
+criada_em = input("Criada em: ")
+
+print("\n--- Subtarefa cadastrada ---")
+print("ID:", id_subtarefa)
+print("Tarefa:", id_tarefa)
+print("Descrição:", descricao)
+print("Concluída:", concluida)
+print("Ordem:", ordem)
+print("Criada em:", criada_em)

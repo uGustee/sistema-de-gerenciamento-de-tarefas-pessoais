@@ -1,0 +1,16 @@
+print("Cadastro de Lembrete")
+
+id_lembrete = input("ID do lembrete: ")
+id_tarefa = input("ID da tarefa: ")
+data_lembrete = input("Data do lembrete: ")
+repetir = input("Repetir lembrete: ")
+enviado = input("Enviado? (sim/não): ")
+criado_em = input("Criado em: ")
+
+print("\n--- Lembrete cadastrado ---")
+print("ID:", id_lembrete)
+print("Tarefa:", id_tarefa)
+print("Data:", data_lembrete)
+print("Repetir:", repetir)
+print("Enviado:", enviado)
+print("Criado em:", criado_em)
