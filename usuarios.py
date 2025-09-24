@@ -1,32 +1,20 @@
-def cadastrar_usuario():
-    id_usuario = input("Digite o ID do usuário: ")
-    nome = input("Nome: ")
-    email = input("Email: ")
-    senha = input("Senha: ")
-    foto_url = input("URL da foto: ")
-    data_cadastro = input("Data de cadastro: ")
-    ultimo_login = input("Último login: ")
-    ativo_input = input("Usuário ativo? (s/n): ")
-    if ativo_input.lower() == "s":
-        ativo = True
-    else:
-        ativo = False
+print("Cadastro de Usuário")
 
-    usuario = {
-        "id_usuario": id_usuario,
-        "nome": nome,
-        "email": email,
-        "senha": senha,
-        "foto_url": foto_url,
-        "data_cadastro": data_cadastro,
-        "ultimo_login": ultimo_login,
-        "ativo": ativo
-    }
-    return usuario
+id_usuario = input("ID do usuário: ")
+nome_usuario = input("Nome do usuário: ")
+email_usuario = input("Email do usuário: ")
+senha_usuario = input("Senha do usuário: ")
+url_foto_usuario = input("URL da foto do usuário: ")
+data_cadastro = input("Data de cadastro: ")
+ultimo_login_usuario = input("Último login: ")
+ativo_usuario = input("Usuário ativo? (sim/não): ")
 
-def mostrar_usuario(u):
-    status = "Ativo" if u["ativo"] else "Inativo"
-    print("Usuário:", u["id_usuario"])
-    print(" Nome:", u["nome"])
-    print(" Email:", u["email"])
-    print(" Status:", status)
+print("\n--- Usuário cadastrado ---")
+print("ID:", id_usuario)
+print("Nome:", nome_usuario)
+print("Email:", email_usuario)
+print("Senha:", senha_usuario)
+print("Foto:", url_foto_usuario)
+print("Data cadastro:", data_cadastro)
+print("Último login:", ultimo_login_usuario)
+print("Ativo:", ativo_usuario)
