@@ -1,0 +1,16 @@
+print("Cadastro de Histórico de Alterações")
+
+id_historico = input("ID do histórico: ")
+id_tarefa = input("ID da tarefa: ")
+id_usuario = input("ID do usuário: ")
+acao = input("Ação realizada: ")
+detalhes = input("Detalhes: ")
+data_alteracao = input("Data da alteração: ")
+
+print("\n--- Histórico cadastrado ---")
+print("ID:", id_historico)
+print("Tarefa:", id_tarefa)
+print("Usuário:", id_usuario)
+print("Ação:", acao)
+print("Detalhes:", detalhes)
+print("Data:", data_alteracao)
