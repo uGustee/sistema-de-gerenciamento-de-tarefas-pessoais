@@ -1,20 +1,9 @@
-print("Cadastro de Usuário")
+nome = input("Digite o nome do usuário: ")
 
-id_usuario = input("ID do usuário: ")
-nome_usuario = input("Nome do usuário: ")
-email_usuario = input("Email do usuário: ")
-senha_usuario = input("Senha do usuário: ")
-url_foto_usuario = input("URL da foto do usuário: ")
-data_cadastro = input("Data de cadastro: ")
-ultimo_login_usuario = input("Último login: ")
-ativo_usuario = input("Usuário ativo? (sim/não): ")
+cpf = input("Digite o CPF do usuário (apenas números): ")
+cpf = cpf[:3] + "." + cpf[3:6] + "." + cpf[6:9] + "-" + cpf[9:]
 
-print("\n--- Usuário cadastrado ---")
-print("ID:", id_usuario)
-print("Nome:", nome_usuario)
-print("Email:", email_usuario)
-print("Senha:", senha_usuario)
-print("Foto:", url_foto_usuario)
-print("Data cadastro:", data_cadastro)
-print("Último login:", ultimo_login_usuario)
-print("Ativo:", ativo_usuario)
+telefone = input("Digite o telefone do usuário (apenas números): ")
+telefone = "(" + telefone[:2] + ")" + telefone[2:7] + "-" + telefone[7:]
+
+email = input("Digite o e-mail do usuário: ")
