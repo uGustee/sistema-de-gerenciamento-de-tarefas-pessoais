@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Tarefas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #555;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #333;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Cadastro de Tarefas</h2>
+  <form id="formTarefas">
+    <label>Título:</label>
+    <input type="text" id="titulo" required>
+
+    <label>Descrição:</label>
+    <textarea id="descricao" rows="3" required></textarea>
+
+    <label>Data de Início:</label>
+    <input type="date" id="dataInicio" required>
+
+    <label>Data de Término:</label>
+    <input type="date" id="dataFim" required>
+
+    <label>Status:</label>
+    <select id="status" required>
+      <option value="">Selecione...</option>
+      <option value="pendente">Pendente</option>
+      <option value="andamento">Em andamento</option>
+      <option value="concluida">Concluída</option>
+    </select>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <script>
+    document.getElementById("formTarefas").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const inicio = document.getElementById("dataInicio").value;
+      const fim = document.getElementById("dataFim").value;
+
+      if (inicio && fim && fim < inicio) {
+        alert("A data de término não pode ser antes da data de início!");
+        return;
+      }
+
+      alert("Tarefa cadastrada com sucesso!");
+    });
+  </script>
+
+</body>
+</html>
