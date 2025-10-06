@@ -8,7 +8,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# 🔥 CONFIGURAÇÃO FIREBASE (ADICIONE ESTAS 4 LINHAS)
+
 try:
     cred = credentials.Certificate('firebase-key.json')
     firebase_admin.initialize_app(cred)
@@ -19,7 +19,6 @@ except:
     firebase_connected = False
     print("⚠️ Usando apenas armazenamento local")
 
-# (O RESTO DO SEU CÓDIGO CONTINUA IGUAL...)
 DATA_DIR = 'data'
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
@@ -75,7 +74,7 @@ def get_all_users():
     users.sort(key=lambda x: x.get('data_cadastro', ''), reverse=True)
     return users
 
-# (O RESTO DO CÓDIGO CONTINUA IGUAL AO SEU)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -142,4 +141,5 @@ if __name__ == '__main__':
     print("📁 Dados salvos em: data/")
     print("🔥 Firebase:", "CONECTADO" if firebase_connected else "NÃO CONECTADO")
     print("🌐 Acesse: http://localhost:5000")
+
     app.run(debug=True, host='0.0.0.0', port=5000)
