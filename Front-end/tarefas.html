@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tarefas com Subtarefas - Rosa Pastel</title>
+    <title>Lista de Tarefas </title>
     <style>
         * {
             margin: 0;
@@ -74,22 +74,6 @@
             color: #B8375E;
         }
 
-        .menu-hamburguer {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .menu-hamburguer span {
-            width: 25px;
-            height: 3px;
-            background-color: #D94D73;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -158,11 +142,6 @@
             background-color: #E88AA4;
         }
 
-        .botao-pequeno {
-            padding: 8px 12px;
-            font-size: 0.9rem;
-        }
-
         .lista-tarefas {
             padding: 25px;
         }
@@ -171,138 +150,6 @@
             color: #D94D73;
             margin-bottom: 20px;
             font-size: 1.5rem;
-        }
-
-        .item-tarefa {
-            padding: 15px;
-            background-color: #FFF9FB;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            border-left: 4px solid #FFB6C1;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .item-tarefa:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .item-tarefa.concluida {
-            opacity: 0.7;
-            border-left-color: #A8E6CF;
-        }
-
-        .cabecalho-tarefa {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .texto-tarefa {
-            flex: 1;
-            margin-left: 15px;
-            font-size: 1.1rem;
-        }
-
-        .item-tarefa.concluida .texto-tarefa {
-            text-decoration: line-through;
-            color: #999;
-        }
-
-        .acoes-tarefa {
-            display: flex;
-            gap: 10px;
-        }
-
-        .botao-concluir, .botao-excluir, .botao-subtarefas {
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-
-        .botao-concluir {
-            background-color: #A8E6CF;
-        }
-
-        .botao-concluir:hover {
-            background-color: #88D4B5;
-        }
-
-        .botao-excluir {
-            background-color: #FF8BA0;
-        }
-
-        .botao-excluir:hover {
-            background-color: #E86A7F;
-        }
-
-        .botao-subtarefas {
-            background-color: #D4B5FF;
-        }
-
-        .botao-subtarefas:hover {
-            background-color: #C19AFF;
-        }
-
-        .area-subtarefas {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #FFF5F9;
-            border-radius: 8px;
-            border: 1px solid #FFECF1;
-        }
-
-        .lista-subtarefas {
-            margin-top: 10px;
-        }
-
-        .item-subtarefa {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background-color: white;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            border-left: 3px solid #E88AA4;
-        }
-
-        .item-subtarefa.concluida {
-            opacity: 0.7;
-            border-left-color: #A8E6CF;
-        }
-
-        .texto-subtarefa {
-            flex: 1;
-            margin-left: 10px;
-            font-size: 1rem;
-        }
-
-        .item-subtarefa.concluida .texto-subtarefa {
-            text-decoration: line-through;
-            color: #999;
-        }
-
-        .acoes-subtarefa {
-            display: flex;
-            gap: 8px;
-        }
-
-        .botao-concluir-subtarefa, .botao-excluir-subtarefa {
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .formulario-subtarefas {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .contador-subtarefas {
-            font-size: 0.9rem;
-            color: #E88AA4;
-            margin-top: 5px;
         }
 
         .estado-vazio {
@@ -325,54 +172,7 @@
         }
 
         @media (max-width: 768px) {
-            .navbar-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
-                flex-direction: column;
-                padding: 10px;
-                border-radius: 0 0 10px 10px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                z-index: 1000;
-            }
-
-            .navbar-menu.ativo {
-                display: flex;
-            }
-
-            .menu-hamburguer {
-                display: flex;
-            }
-
-            .navbar-item {
-                width: 100%;
-            }
-
-            .navbar-link {
-                padding: 12px 15px;
-                border-radius: 5px;
-                margin: 2px 0;
-            }
-
             .grupo-formulario {
-                flex-direction: column;
-            }
-            
-            .cabecalho-tarefa {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .acoes-tarefa {
-                margin-top: 10px;
-                width: 100%;
-                justify-content: flex-end;
-            }
-            
-            .formulario-subtarefas {
                 flex-direction: column;
             }
         }
@@ -382,14 +182,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            
-            <div class="menu-hamburguer" id="menuHamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="navbar-menu" id="navbarMenu">
+            <ul class="navbar-menu">
                 <li class="navbar-item">
                     <a href="usuarios.html" class="navbar-link">Usuários</a>
                 </li>
@@ -448,199 +241,5 @@
             <p>© 2025 Prio</p>
         </footer>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuHamburguer = document.getElementById('menuHamburguer');
-            const navbarMenu = document.getElementById('navbarMenu');
-            
-            menuHamburguer.addEventListener('click', function() {
-                navbarMenu.classList.toggle('ativo');
-            });
-            
-            const navbarLinks = document.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navbarMenu.classList.remove('ativo');
-                    }
-                });
-            });
-            
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navbarLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
-                    link.classList.add('ativo');
-                }
-            });
-
-            const entradaTarefa = document.getElementById('entradaTarefa');
-            const botaoAdicionarTarefa = document.getElementById('botaoAdicionarTarefa');
-            const containerTarefas = document.getElementById('containerTarefas');
-            
-            let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-            
-            function renderizarTarefas() {
-                containerTarefas.innerHTML = '';
-                
-                if (tarefas.length === 0) {
-                    containerTarefas.innerHTML = `
-                        <div class="estado-vazio">
-                            <p>Nenhuma tarefa adicionada ainda.</p>
-                            <p>Comece adicionando sua primeira tarefa!</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                tarefas.forEach((tarefa, indice) => {
-                    const elementoItem = document.createElement('div');
-                    elementoItem.className = `item-tarefa ${tarefa.concluida ? 'concluida' : ''}`;
-                    
-                    const totalSubtarefas = tarefa.subtarefas ? tarefa.subtarefas.length : 0;
-                    const subtarefasConcluidas = tarefa.subtarefas ? 
-                        tarefa.subtarefas.filter(sub => sub.concluida).length : 0;
-                    
-                    elementoItem.innerHTML = `
-                        <div class="cabecalho-tarefa">
-                            <input type="checkbox" ${tarefa.concluida ? 'checked' : ''} onchange="alternarTarefa(${indice})">
-                            <span class="texto-tarefa">${tarefa.texto}</span>
-                            <div class="acoes-tarefa">
-                                <button class="botao-subtarefas botao-pequeno" onclick="alternarSubtarefas(${indice})">
-                                    ${tarefa.mostrarSubtarefas ? 'Ocultar' : 'Mostrar'} Subtarefas
-                                </button>
-                                <button class="botao-concluir botao-pequeno" onclick="alternarTarefa(${indice})">
-                                    ${tarefa.concluida ? 'Desmarcar' : 'Concluir'}
-                                </button>
-                                <button class="botao-excluir botao-pequeno" onclick="excluirTarefa(${indice})">Excluir</button>
-                            </div>
-                        </div>
-                        ${totalSubtarefas > 0 ? `
-                            <div class="contador-subtarefas">
-                                ${subtarefasConcluidas} de ${totalSubtarefas} subtarefas concluídas
-                            </div>
-                        ` : ''}
-                        ${tarefa.mostrarSubtarefas ? `
-                            <div class="area-subtarefas">
-                                <div class="formulario-subtarefas">
-                                    <input type="text" id="entradaSubtarefa-${indice}" placeholder="Adicionar subtarefa..." class="entrada-subtarefa">
-                                    <button class="botao-pequeno" onclick="adicionarSubtarefa(${indice})">Adicionar</button>
-                                </div>
-                                <div class="lista-subtarefas" id="listaSubtarefas-${indice}">
-                                    ${renderizarSubtarefas(tarefa.subtarefas, indice)}
-                                </div>
-                            </div>
-                        ` : ''}
-                    `;
-                    containerTarefas.appendChild(elementoItem);
-                });
-            }
-            
-            function renderizarSubtarefas(subtarefas, indiceTarefa) {
-                if (!subtarefas || subtarefas.length === 0) {
-                    return '<div class="estado-vazio" style="padding: 20px 10px;"><p>Nenhuma subtarefa adicionada</p></div>';
-                }
-                
-                return subtarefas.map((subtarefa, indiceSubtarefa) => `
-                    <div class="item-subtarefa ${subtarefa.concluida ? 'concluida' : ''}">
-                        <input type="checkbox" ${subtarefa.concluida ? 'checked' : ''} 
-                            onchange="alternarSubtarefa(${indiceTarefa}, ${indiceSubtarefa})">
-                        <span class="texto-subtarefa">${subtarefa.texto}</span>
-                        <div class="acoes-subtarefa">
-                            <button class="botao-concluir-subtarefa botao-pequeno" 
-                                onclick="alternarSubtarefa(${indiceTarefa}, ${indiceSubtarefa})">
-                                ${subtarefa.concluida ? 'Desmarcar' : 'Concluir'}
-                            </button>
-                            <button class="botao-excluir-subtarefa botao-pequeno" 
-                                onclick="excluirSubtarefa(${indiceTarefa}, ${indiceSubtarefa})">Excluir</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            
-            botaoAdicionarTarefa.addEventListener('click', function() {
-                const texto = entradaTarefa.value.trim();
-                if (texto) {
-                    tarefas.push({ 
-                        texto: texto, 
-                        concluida: false, 
-                        mostrarSubtarefas: false,
-                        subtarefas: [] 
-                    });
-                    salvarTarefas();
-                    renderizarTarefas();
-                    entradaTarefa.value = '';
-                }
-            });
-            
-            entradaTarefa.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    botaoAdicionarTarefa.click();
-                }
-            });
-            
-            function salvarTarefas() {
-                localStorage.setItem('tarefas', JSON.stringify(tarefas));
-            }
-            
-            window.alternarSubtarefas = function(indice) {
-                tarefas[indice].mostrarSubtarefas = !tarefas[indice].mostrarSubtarefas;
-                salvarTarefas();
-                renderizarTarefas();
-            };
-
-            window.adicionarSubtarefa = function(indiceTarefa) {
-                const entrada = document.getElementById(`entradaSubtarefa-${indiceTarefa}`);
-                const texto = entrada.value.trim();
-                
-                if (texto) {
-                    if (!tarefas[indiceTarefa].subtarefas) {
-                        tarefas[indiceTarefa].subtarefas = [];
-                    }
-                    
-                    tarefas[indiceTarefa].subtarefas.push({
-                        texto: texto,
-                        concluida: false
-                    });
-                    
-                    salvarTarefas();
-                    renderizarTarefas();
-                    entrada.value = '';
-                }
-            };
-            
-            window.alternarTarefa = function(indice) {
-                tarefas[indice].concluida = !tarefas[indice].concluida;
-                salvarTarefas();
-                renderizarTarefas();
-            };
-            
-            window.alternarSubtarefa = function(indiceTarefa, indiceSubtarefa) {
-                tarefas[indiceTarefa].subtarefas[indiceSubtarefa].concluida = 
-                    !tarefas[indiceTarefa].subtarefas[indiceSubtarefa].concluida;
-                salvarTarefas();
-                renderizarTarefas();
-            };
-            
-            window.excluirTarefa = function(indice) {
-                if (confirm('Tem certeza que deseja excluir esta tarefa e todas as suas subtarefas?')) {
-                    tarefas.splice(indice, 1);
-                    salvarTarefas();
-                    renderizarTarefas();
-                }
-            };
-        
-            window.excluirSubtarefa = function(indiceTarefa, indiceSubtarefa) {
-                if (confirm('Tem certeza que deseja excluir esta subtarefa?')) {
-                    tarefas[indiceTarefa].subtarefas.splice(indiceSubtarefa, 1);
-                    salvarTarefas();
-                    renderizarTarefas();
-                }
-            };
-            
-            renderizarTarefas();
-        });
-    </script>
 </body>
 </html>
