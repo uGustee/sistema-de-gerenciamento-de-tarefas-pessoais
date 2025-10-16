@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Preferências</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f4f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .preferences-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-section {
+            background-color: #fef9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid #ffb6c1;
+        }
+
+        .form-section h3 {
+            color: #ff69b4;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .theme-option {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .theme-option input {
+            display: none;
+        }
+
+        .theme-option label {
+            display: block;
+            padding: 12px;
+            background-color: #f9f4f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .theme-option input:checked + label {
+            border-color: #ff69b4;
+            background-color: #fff0f5;
+            color: #ff69b4;
+            font-weight: 600;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: #ff69b4;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: white;
+            transition: all 0.3s;
+        }
+
+        select:focus {
+            border-color: #ffb6c1;
+            box-shadow: 0 0 0 2px rgba(255, 182, 193, 0.2);
+            outline: none;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff1493;
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100px;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 8px;
+            z-index: 2;
+        }
+
+        .step-circle.active {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #888;
+            text-align: center;
+        }
+
+        .step-label.active {
+            color: #ff69b4;
+            font-weight: 500;
+        }
+
+        .progress-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 70px;
+            width: 60px;
+            height: 2px;
+            background-color: #f0f0f0;
+            z-index: 1;
+        }
+
+        .progress-step.active:not(:last-child)::after {
+            background-color: #ff69b4;
+        }
+
+        @media (max-width: 600px) {
+            .content {
+                padding: 25px;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .theme-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Personalize sua experiência</h1>
+            <p>Configure suas preferências para aproveitar ao máximo o TaskFlow</p>
+        </div>
+        
+        <div class="content">
+            <div class="progress-bar">
+                <div class="progress-step">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Cadastro</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle active">2</div>
+                    <div class="step-label active">Preferências</div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Pronto!</div>
+                </div>
+            </div>
+            
+            <form class="preferences-form" id="preferencesForm">
+                <div class="form-section">
+                    <h3>Preferências de Tema</h3>
+                    <div class="form-group">
+                        <label>Escolha o tema da interface:</label>
+                        <div class="theme-options">
+                            <div class="theme-option">
+                                <input type="radio" id="tema-claro" name="tema" value="claro" checked>
+                                <label for="tema-claro">Claro</label>
+                            </div>
+                            <div class="theme-option">
+                                <input type="radio" id="tema-escuro" name="tema" value="escuro">
+                                <label for="tema-escuro">Escuro</label>
+                            </div>
+                            <div class="theme-option">
+                                <input type="radio" id="tema-rosa" name="tema" value="rosa">
+                                <label for="tema-rosa">Rosa Pastel</label>
+                            </div>
+                            <div class="theme-option">
+                                <input type="radio" id="tema-auto" name="tema" value="auto">
+                                <label for="tema-auto">Automático</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Preferências de Notificação</h3>
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="not-email" name="not-email" checked>
+                            <label for="not-email">Receber notificações por e-mail</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="not-push" name="not-push" checked>
+                            <label for="not-push">Receber notificações push no navegador</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Configurações de Lembretes</h3>
+                    <div class="form-group">
+                        <label for="lembrete-padrao">Lembrete padrão para novas tarefas:</label>
+                        <select id="lembrete-padrao" name="lembrete-padrao">
+                            <option value="0">Sem lembrete</option>
+                            <option value="15">15 minutos antes</option>
+                            <option value="30" selected>30 minutos antes</option>
+                            <option value="60">1 hora antes</option>
+                            <option value="1440">1 dia antes</option>
+                            <option value="2880">2 dias antes</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="btn-container">
+                    <button type="button" class="btn btn-secondary">Voltar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Preferências</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('preferencesForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletar dados do formulário
+            const tema = document.querySelector('input[name="tema"]:checked').value;
+            const notEmail = document.getElementById('not-email').checked;
+            const notPush = document.getElementById('not-push').checked;
+            const lembretePadrao = document.getElementById('lembrete-padrao').value;
+            
+            // Aqui você normalmente enviaria os dados para o servidor
+            console.log({
+                tema,
+                notEmail,
+                notPush,
+                lembretePadrao
+            });
+            
+            alert('Preferências salvas com sucesso!');
+            // Redirecionar para a próxima página (dashboard)
+            // window.location.href = 'dashboard.html';
+        });
+
+        // Voltar para a página anterior
+        document.querySelector('.btn-secondary').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>
