@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembretes - Rosa Pastel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFF5F7;
+            color: #555;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .cabecalho {
+            background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid #FFECF1;
+        }
+
+        h1 {
+            color: #D94D73;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            color: #E88AA4;
+            font-size: 1.1rem;
+        }
+
+        .formulario-lembretes {
+            padding: 25px;
+            background-color: #FFF9FB;
+            border-bottom: 1px solid #FFECF1;
+        }
+
+        .grupo-campo {
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: #D94D73;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #FFD6E0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            background-color: white;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #E88AA4;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .grupo-botoes {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        button {
+            background-color: #FFB6C1;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #E88AA4;
+        }
+
+        .botao-secundario {
+            background-color: #D4B5FF;
+        }
+
+        .botao-secundario:hover {
+            background-color: #C19AFF;
+        }
+
+        .lista-lembretes {
+            padding: 25px;
+            min-height: 400px;
+        }
+
+        h2 {
+            color: #D94D73;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .cartao-lembrete {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid #FFB6C1;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .cartao-lembrete:hover {
+            transform: translateY(-3px);
+        }
+
+        .cartao-lembrete.concluido {
+            border-left-color: #A8E6CF;
+            opacity: 0.7;
+        }
+
+        .titulo-lembrete {
+            color: #D94D73;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .descricao-lembrete {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .info-lembrete {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .data-hora {
+            color: #E88AA4;
+            font-weight: 600;
+        }
+
+        .acoes-lembrete {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .botao-pequeno {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+        }
+
+        .botao-concluir {
+            background-color: #A8E6CF;
+        }
+
+        .botao-concluir:hover {
+            background-color: #88D4B5;
+        }
+
+        .botao-excluir {
+            background-color: #FF8BA0;
+        }
+
+        .botao-excluir:hover {
+            background-color: #E86A7F;
+        }
+
+        .estado-vazio {
+            text-align: center;
+            padding: 60px 20px;
+            color: #E88AA4;
+        }
+
+        .estado-vazio p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .rodape {
+            text-align: center;
+            padding: 20px;
+            background-color: #FFF0F5;
+            color: #E88AA4;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .grupo-botoes {
+                flex-direction: column;
+            }
+            
+            .acoes-lembrete {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="cabecalho">
+            <h1>Meus Lembretes</h1>
+            <p class="subtitulo">Nunca mais esqueça dos seus compromissos</p>
+        </header>
+        
+        <div class="formulario-lembretes">
+            <div class="grupo-campo">
+                <label for="tituloLembrete">Título do Lembrete</label>
+                <input type="text" id="tituloLembrete" placeholder="Ex: Reunião importante" maxlength="50">
+            </div>
+            <div class="grupo-campo">
+                <label for="dataHoraLembrete">Data e Hora</label>
+                <input type="datetime-local" id="dataHoraLembrete">
+            </div>
+            <div class="grupo-campo">
+                <label for="descricaoLembrete">Descrição (Opcional)</label>
+                <textarea id="descricaoLembrete" placeholder="Adicione detalhes sobre este lembrete..."></textarea>
+            </div>
+            <div class="grupo-botoes">
+                <button class="botao-secundario" onclick="limparFormulario()">Limpar</button>
+                <button onclick="salvarLembrete()">Salvar Lembrete</button>
+            </div>
+        </div>
+        
+        <div class="lista-lembretes">
+            <h2>Seus Lembretes</h2>
+            <div id="containerLembretes">
+                <div class="estado-vazio">
+                    <p>Nenhum lembrete adicionado ainda.</p>
+                    <p>Comece criando seu primeiro lembrete!</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="rodape">
+            <p>© 2025 Prio - Sistema de Lembretes</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const containerLembretes = document.getElementById('containerLembretes');
+            
+            let lembretes = JSON.parse(localStorage.getItem('lembretes')) || [];
+            
+            const agora = new Date();
+            const dataHoraInput = document.getElementById('dataHoraLembrete');
+            dataHoraInput.min = agora.toISOString().slice(0, 16);
+            
+            renderizarLembretes();
+            
+            function renderizarLembretes() {
+                containerLembretes.innerHTML = '';
+                
+                if (lembretes.length === 0) {
+                    containerLembretes.innerHTML = `
+                        <div class="estado-vazio">
+                            <p>Nenhum lembrete adicionado ainda.</p>
+                            <p>Comece criando seu primeiro lembrete!</p>
+                        </div>
+                    `;
+                    return;
+                }
+            
+                lembretes.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
+                
+                lembretes.forEach((lembrete, indice) => {
+                    const cartao = document.createElement('div');
+                    const dataHora = new Date(lembrete.dataHora);
+                    const agora = new Date();
+                    const vencido = dataHora < agora && !lembrete.concluido;
+                    
+                    cartao.className = `cartao-lembrete ${lembrete.concluido ? 'concluido' : ''}`;
+                    cartao.innerHTML = `
+                        <div class="titulo-lembrete">${lembrete.titulo}</div>
+                        ${lembrete.descricao ? `<div class="descricao-lembrete">${lembrete.descricao}</div>` : ''}
+                        <div class="info-lembrete">
+                            <div class="data-hora">
+                                ⏰ ${formatarDataHora(lembrete.dataHora)}
+                                ${vencido && !lembrete.concluido ? ' (Vencido)' : ''}
+                            </div>
+                        </div>
+                        <div class="acoes-lembrete">
+                            ${!lembrete.concluido ? `
+                                <button class="botao-concluir botao-pequeno" onclick="concluirLembrete(${indice})">
+                                    Concluir
+                                </button>
+                            ` : ''}
+                            <button class="botao-excluir botao-pequeno" onclick="excluirLembrete(${indice})">
+                                Excluir
+                            </button>
+                        </div>
+                    `;
+                    containerLembretes.appendChild(cartao);
+                });
+            }
+            
+            function formatarDataHora(dataHoraString) {
+                const data = new Date(dataHoraString);
+                return data.toLocaleString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+        }
+        
+            window.salvarLembrete = function() {
+                const titulo = document.getElementById('tituloLembrete').value.trim();
+                const dataHora = document.getElementById('dataHoraLembrete').value;
+                const descricao = document.getElementById('descricaoLembrete').value.trim();
+                
+                if (!titulo || !dataHora) {
+                    alert('Por favor, preencha pelo menos o título e a data/hora!');
+                    return;
+                }
+                
+                const lembrete = {
+                    titulo,
+                    dataHora,
+                    descricao,
+                    concluido: false,
+                    dataCriacao: new Date().toISOString()
+                };
+                
+                lembretes.push(lembrete);
+                salvarLembretes();
+                renderizarLembretes();
+                limparFormulario();
+                alert('Lembrete adicionado com sucesso!');
+            };
+            
+            function salvarLembretes() {
+                localStorage.setItem('lembretes', JSON.stringify(lembretes));
+            }
+            
+            window.limparFormulario = function() {
+                document.getElementById('tituloLembrete').value = '';
+                document.getElementById('dataHoraLembrete').value = '';
+                document.getElementById('descricaoLembrete').value = '';
+            };
+            
+            window.concluirLembrete = function(indice) {
+                lembretes[indice].concluido = true;
+                salvarLembretes();
+                renderizarLembretes();
+            };
+            
+            window.excluirLembrete = function(indice) {
+                if (confirm('Tem certeza que deseja excluir este lembrete?')) {
+                    lembretes.splice(indice, 1);
+                    salvarLembretes();
+                    renderizarLembretes();
+                }
+            };
+        });
+    </script>
+</body>
+</html>
