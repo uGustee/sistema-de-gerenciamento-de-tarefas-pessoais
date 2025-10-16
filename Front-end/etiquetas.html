@@ -19,6 +19,76 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        .navbar {
+            background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: #D94D73;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px 0;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .navbar-item {
+            position: relative;
+        }
+
+        .navbar-link {
+            color: #D94D73;
+            text-decoration: none;
+            padding: 15px 12px;
+            display: block;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
+        }
+
+        .navbar-link.ativo {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #B8375E;
+        }
+
+        .menu-hamburguer {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .menu-hamburguer span {
+            width: 25px;
+            height: 3px;
+            background-color: #D94D73;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
         
         body {
             background-color: var(--cinza-claro);
@@ -148,7 +218,38 @@
             color: #666;
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+                flex-direction: column;
+                padding: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .navbar-menu.ativo {
+                display: flex;
+            }
+
+            .menu-hamburguer {
+                display: flex;
+            }
+
+            .navbar-item {
+                width: 100%;
+            }
+
+            .navbar-link {
+                padding: 12px 15px;
+                border-radius: 5px;
+                margin: 2px 0;
+            }
+
             .etiqueta {
                 flex-direction: column;
                 align-items: flex-start;
@@ -161,6 +262,48 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">Prio</a>
+            
+            <div class="menu-hamburguer" id="menuHamburguer">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="navbar-menu" id="navbarMenu">
+                <li class="navbar-item">
+                    <a href="usuarios.html" class="navbar-link">Usuários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="metricas.html" class="navbar-link">Métricas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="lembretes.html" class="navbar-link">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link ativo">Etiquetas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <h1>Sistema de Etiquetas</h1>
@@ -212,63 +355,79 @@
     </div>
 
     <script>
-        // Atualizar visualização da cor
-        document.getElementById('cor_etiqueta').addEventListener('input', function() {
-            document.getElementById('color-preview').style.backgroundColor = this.value;
-        });
-        
-        document.getElementById('form-etiqueta').addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuHamburguer = document.getElementById('menuHamburguer');
+            const navbarMenu = document.getElementById('navbarMenu');
             
-            // Coletar dados do formulário
-            const idEtiqueta = document.getElementById('id_etiqueta').value;
-            const nomeEtiqueta = document.getElementById('nome_etiqueta').value;
-            const corEtiqueta = document.getElementById('cor_etiqueta').value;
-            const idUsuario = document.getElementById('id_usuario').value;
-            const criadoEm = document.getElementById('criado_em').value;
+            menuHamburguer.addEventListener('click', function() {
+                navbarMenu.classList.toggle('ativo');
+            });
             
-            // Criar elemento de etiqueta
-            const etiquetaElement = document.createElement('div');
-            etiquetaElement.className = 'etiqueta';
+            const navbarLinks = document.querySelectorAll('.navbar-link');
+            navbarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navbarMenu.classList.remove('ativo');
+                    }
+                });
+            });
             
-            // Formatar data para exibição
-            const criadoEmFormatado = new Date(criadoEm).toLocaleString('pt-BR');
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            navbarLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
+                    link.classList.add('ativo');
+                }
+            });
+
+            document.getElementById('cor_etiqueta').addEventListener('input', function() {
+                document.getElementById('color-preview').style.backgroundColor = this.value;
+            });
             
-            etiquetaElement.innerHTML = `
-                <div class="etiqueta-cor" style="background-color: ${corEtiqueta};"></div>
-                <div class="etiqueta-info">
-                    <div class="etiqueta-nome">${nomeEtiqueta}</div>
-                    <div class="etiqueta-detalhes">
-                        <span class="etiqueta-id">ID: ${idEtiqueta}</span> | 
-                        Usuário: ${idUsuario} | 
-                        Criado em: ${criadoEmFormatado}
+            document.getElementById('form-etiqueta').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const idEtiqueta = document.getElementById('id_etiqueta').value;
+                const nomeEtiqueta = document.getElementById('nome_etiqueta').value;
+                const corEtiqueta = document.getElementById('cor_etiqueta').value;
+                const idUsuario = document.getElementById('id_usuario').value;
+                const criadoEm = document.getElementById('criado_em').value;
+                
+                const etiquetaElement = document.createElement('div');
+                etiquetaElement.className = 'etiqueta';
+                
+                const criadoEmFormatado = new Date(criadoEm).toLocaleString('pt-BR');
+                
+                etiquetaElement.innerHTML = `
+                    <div class="etiqueta-cor" style="background-color: ${corEtiqueta};"></div>
+                    <div class="etiqueta-info">
+                        <div class="etiqueta-nome">${nomeEtiqueta}</div>
+                        <div class="etiqueta-detalhes">
+                            <span class="etiqueta-id">ID: ${idEtiqueta}</span> | 
+                            Usuário: ${idUsuario} | 
+                            Criado em: ${criadoEmFormatado}
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+                
+                const listaEtiquetas = document.getElementById('lista-etiquetas');
+                
+                if (listaEtiquetas.querySelector('.empty-state')) {
+                    listaEtiquetas.innerHTML = '';
+                }
+                
+                listaEtiquetas.prepend(etiquetaElement);
+                
+                document.getElementById('form-etiqueta').reset();
+                
+                document.getElementById('cor_etiqueta').value = '#f8d7da';
+                document.getElementById('color-preview').style.backgroundColor = '#f8d7da';
+                
+                alert('Etiqueta cadastrada com sucesso!');
+            });
             
-            // Adicionar à lista de etiquetas
-            const listaEtiquetas = document.getElementById('lista-etiquetas');
-            
-            // Remover mensagem de estado vazio se for a primeira etiqueta
-            if (listaEtiquetas.querySelector('.empty-state')) {
-                listaEtiquetas.innerHTML = '';
-            }
-            
-            listaEtiquetas.prepend(etiquetaElement);
-            
-            // Limpar formulário
-            document.getElementById('form-etiqueta').reset();
-            
-            // Resetar cor para o valor padrão
-            document.getElementById('cor_etiqueta').value = '#f8d7da';
-            document.getElementById('color-preview').style.backgroundColor = '#f8d7da';
-            
-            // Exibir mensagem de confirmação
-            alert('Etiqueta cadastrada com sucesso!');
+            document.getElementById('criado_em').valueAsDate = new Date();
         });
-        
-        // Definir data atual como padrão para o campo criado_em
-        document.getElementById('criado_em').valueAsDate = new Date();
     </script>
 </body>
 </html>
