@@ -3,13 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lembretes - Rosa Pastel</title>
+    <title>Lembretes </title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: #D94D73;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px 0;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .navbar-item {
+            position: relative;
+        }
+
+        .navbar-link {
+            color: #D94D73;
+            text-decoration: none;
+            padding: 15px 12px;
+            display: block;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
+        }
+
+        .navbar-link.ativo {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #B8375E;
+        }
+
+        .menu-hamburguer {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .menu-hamburguer span {
+            width: 25px;
+            height: 3px;
+            background-color: #D94D73;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
         }
 
         body {
@@ -219,7 +289,38 @@
             font-size: 0.9rem;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+                flex-direction: column;
+                padding: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .navbar-menu.ativo {
+                display: flex;
+            }
+
+            .menu-hamburguer {
+                display: flex;
+            }
+
+            .navbar-item {
+                width: 100%;
+            }
+
+            .navbar-link {
+                padding: 12px 15px;
+                border-radius: 5px;
+                margin: 2px 0;
+            }
+
             .grupo-botoes {
                 flex-direction: column;
             }
@@ -231,6 +332,48 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">Prio</a>
+            
+            <div class="menu-hamburguer">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="usuarios.html" class="navbar-link">Usuários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="metricas.html" class="navbar-link">Métricas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="lembretes.html" class="navbar-link ativo">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <header class="cabecalho">
             <h1>Meus Lembretes</h1>
@@ -251,144 +394,22 @@
                 <textarea id="descricaoLembrete" placeholder="Adicione detalhes sobre este lembrete..."></textarea>
             </div>
             <div class="grupo-botoes">
-                <button class="botao-secundario" onclick="limparFormulario()">Limpar</button>
-                <button onclick="salvarLembrete()">Salvar Lembrete</button>
+                <button class="botao-secundario">Limpar</button>
+                <button>Salvar Lembrete</button>
             </div>
         </div>
         
         <div class="lista-lembretes">
             <h2>Seus Lembretes</h2>
-            <div id="containerLembretes">
-                <div class="estado-vazio">
-                    <p>Nenhum lembrete adicionado ainda.</p>
-                    <p>Comece criando seu primeiro lembrete!</p>
-                </div>
+            <div class="estado-vazio">
+                <p>Nenhum lembrete adicionado ainda.</p>
+                <p>Comece criando seu primeiro lembrete!</p>
             </div>
         </div>
         
         <footer class="rodape">
-            <p>© 2025 Prio - Sistema de Lembretes</p>
+            <p>© 2025 Prio </p>
         </footer>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const containerLembretes = document.getElementById('containerLembretes');
-            
-            let lembretes = JSON.parse(localStorage.getItem('lembretes')) || [];
-            
-            const agora = new Date();
-            const dataHoraInput = document.getElementById('dataHoraLembrete');
-            dataHoraInput.min = agora.toISOString().slice(0, 16);
-            
-            renderizarLembretes();
-            
-            function renderizarLembretes() {
-                containerLembretes.innerHTML = '';
-                
-                if (lembretes.length === 0) {
-                    containerLembretes.innerHTML = `
-                        <div class="estado-vazio">
-                            <p>Nenhum lembrete adicionado ainda.</p>
-                            <p>Comece criando seu primeiro lembrete!</p>
-                        </div>
-                    `;
-                    return;
-                }
-            
-                lembretes.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
-                
-                lembretes.forEach((lembrete, indice) => {
-                    const cartao = document.createElement('div');
-                    const dataHora = new Date(lembrete.dataHora);
-                    const agora = new Date();
-                    const vencido = dataHora < agora && !lembrete.concluido;
-                    
-                    cartao.className = `cartao-lembrete ${lembrete.concluido ? 'concluido' : ''}`;
-                    cartao.innerHTML = `
-                        <div class="titulo-lembrete">${lembrete.titulo}</div>
-                        ${lembrete.descricao ? `<div class="descricao-lembrete">${lembrete.descricao}</div>` : ''}
-                        <div class="info-lembrete">
-                            <div class="data-hora">
-                                ⏰ ${formatarDataHora(lembrete.dataHora)}
-                                ${vencido && !lembrete.concluido ? ' (Vencido)' : ''}
-                            </div>
-                        </div>
-                        <div class="acoes-lembrete">
-                            ${!lembrete.concluido ? `
-                                <button class="botao-concluir botao-pequeno" onclick="concluirLembrete(${indice})">
-                                    Concluir
-                                </button>
-                            ` : ''}
-                            <button class="botao-excluir botao-pequeno" onclick="excluirLembrete(${indice})">
-                                Excluir
-                            </button>
-                        </div>
-                    `;
-                    containerLembretes.appendChild(cartao);
-                });
-            }
-            
-            function formatarDataHora(dataHoraString) {
-                const data = new Date(dataHoraString);
-                return data.toLocaleString('pt-BR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-        }
-        
-            window.salvarLembrete = function() {
-                const titulo = document.getElementById('tituloLembrete').value.trim();
-                const dataHora = document.getElementById('dataHoraLembrete').value;
-                const descricao = document.getElementById('descricaoLembrete').value.trim();
-                
-                if (!titulo || !dataHora) {
-                    alert('Por favor, preencha pelo menos o título e a data/hora!');
-                    return;
-                }
-                
-                const lembrete = {
-                    titulo,
-                    dataHora,
-                    descricao,
-                    concluido: false,
-                    dataCriacao: new Date().toISOString()
-                };
-                
-                lembretes.push(lembrete);
-                salvarLembretes();
-                renderizarLembretes();
-                limparFormulario();
-                alert('Lembrete adicionado com sucesso!');
-            };
-            
-            function salvarLembretes() {
-                localStorage.setItem('lembretes', JSON.stringify(lembretes));
-            }
-            
-            window.limparFormulario = function() {
-                document.getElementById('tituloLembrete').value = '';
-                document.getElementById('dataHoraLembrete').value = '';
-                document.getElementById('descricaoLembrete').value = '';
-            };
-            
-            window.concluirLembrete = function(indice) {
-                lembretes[indice].concluido = true;
-                salvarLembretes();
-                renderizarLembretes();
-            };
-            
-            window.excluirLembrete = function(indice) {
-                if (confirm('Tem certeza que deseja excluir este lembrete?')) {
-                    lembretes.splice(indice, 1);
-                    salvarLembretes();
-                    renderizarLembretes();
-                }
-            };
-        });
-    </script>
 </body>
 </html>
