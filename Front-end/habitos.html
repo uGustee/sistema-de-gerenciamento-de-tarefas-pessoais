@@ -26,6 +26,76 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        .navbar {
+            background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: #D94D73;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px 0;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .navbar-item {
+            position: relative;
+        }
+
+        .navbar-link {
+            color: #D94D73;
+            text-decoration: none;
+            padding: 15px 12px;
+            display: block;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
+        }
+
+        .navbar-link.ativo {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #B8375E;
+        }
+
+        .menu-hamburguer {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .menu-hamburguer span {
+            width: 25px;
+            height: 3px;
+            background-color: #D94D73;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
         
         body {
             background-color: var(--white);
@@ -396,6 +466,37 @@
         }
         
         @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+                flex-direction: column;
+                padding: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .navbar-menu.ativo {
+                display: flex;
+            }
+
+            .menu-hamburguer {
+                display: flex;
+            }
+
+            .navbar-item {
+                width: 100%;
+            }
+
+            .navbar-link {
+                padding: 12px 15px;
+                border-radius: 5px;
+                margin: 2px 0;
+            }
+
             .charts-section, .habits-section {
                 grid-template-columns: 1fr;
             }
@@ -418,6 +519,48 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">Prio</a>
+            
+            <div class="menu-hamburguer" id="menuHamburguer">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="navbar-menu" id="navbarMenu">
+                <li class="navbar-item">
+                    <a href="usuarios.html" class="navbar-link">Usuários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="metricas.html" class="navbar-link">Métricas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="lembretes.html" class="navbar-link">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link ativo">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <div class="logo">
@@ -654,102 +797,122 @@
     </div>
 
     <script>
-        // Configuração de datas padrão
-        const today = new Date();
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(today.getDate() - 7);
-        
-        document.getElementById('start-date').valueAsDate = oneWeekAgo;
-        document.getElementById('end-date').valueAsDate = today;
-        
-        // Gráfico de progresso de hábitos
-        const habitsCtx = document.getElementById('habitsChart').getContext('2d');
-        const habitsChart = new Chart(habitsCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Meditação', 'Exercício', 'Leitura', 'Água', 'Inglês', 'Organização', 'Alimentação'],
-                datasets: [{
-                    label: 'Taxa de Conclusão (%)',
-                    data: [85, 70, 90, 95, 65, 80, 75],
-                    backgroundColor: [
-                        '#f8d7da',
-                        '#f5c6cb',
-                        '#f1b0b7',
-                        '#e6a4ad',
-                        '#fce4ec',
-                        '#f8d7da',
-                        '#f5c6cb'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuHamburguer = document.getElementById('menuHamburguer');
+            const navbarMenu = document.getElementById('navbarMenu');
+            
+            menuHamburguer.addEventListener('click', function() {
+                navbarMenu.classList.toggle('ativo');
+            });
+            
+            const navbarLinks = document.querySelectorAll('.navbar-link');
+            navbarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navbarMenu.classList.remove('ativo');
                     }
+                });
+            });
+            
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            navbarLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
+                    link.classList.add('ativo');
+                }
+            });
+
+            const today = new Date();
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(today.getDate() - 7);
+            
+            document.getElementById('start-date').valueAsDate = oneWeekAgo;
+            document.getElementById('end-date').valueAsDate = today;
+            
+            const habitsCtx = document.getElementById('habitsChart').getContext('2d');
+            const habitsChart = new Chart(habitsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Meditação', 'Exercício', 'Leitura', 'Água', 'Inglês', 'Organização', 'Alimentação'],
+                    datasets: [{
+                        label: 'Taxa de Conclusão (%)',
+                        data: [85, 70, 90, 95, 65, 80, 75],
+                        backgroundColor: [
+                            '#f8d7da',
+                            '#f5c6cb',
+                            '#f1b0b7',
+                            '#e6a4ad',
+                            '#fce4ec',
+                            '#f8d7da',
+                            '#f5c6cb'
+                        ],
+                        borderWidth: 0
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            callback: function(value) {
-                                return value + '%';
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
-        
-        // Gráfico de distribuição por frequência
-        const frequencyCtx = document.getElementById('frequencyChart').getContext('2d');
-        const frequencyChart = new Chart(frequencyCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Diário', '3x/Semana', '2x/Semana', 'Semanal', 'Personalizado'],
-                datasets: [{
-                    data: [5, 3, 2, 1, 1],
-                    backgroundColor: [
-                        '#f8d7da',
-                        '#f5c6cb',
-                        '#f1b0b7',
-                        '#e6a4ad',
-                        '#fce4ec'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
+            });
+            
+            const frequencyCtx = document.getElementById('frequencyChart').getContext('2d');
+            const frequencyChart = new Chart(frequencyCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Diário', '3x/Semana', '2x/Semana', 'Semanal', 'Personalizado'],
+                    datasets: [{
+                        data: [5, 3, 2, 1, 1],
+                        backgroundColor: [
+                            '#f8d7da',
+                            '#f5c6cb',
+                            '#f1b0b7',
+                            '#e6a4ad',
+                            '#fce4ec'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
                     }
                 }
-            }
-        });
-        
-        // Interação com checkboxes de hábitos
-        document.querySelectorAll('.habit-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('click', function() {
-                this.classList.toggle('checked');
-                
-                // Atualizar métrica de hábitos concluídos hoje
-                const checkedCount = document.querySelectorAll('.habit-checkbox.checked').length;
-                const totalCount = document.querySelectorAll('.habit-checkbox').length;
-                document.querySelector('.metric-card:nth-child(4) .metric-value').textContent = 
-                    `${checkedCount}/${totalCount}`;
             });
-        });
-        
-        // Simulação de filtros
-        document.getElementById('apply-filters').addEventListener('click', function() {
-            alert('Filtros aplicados! Em um sistema real, isso atualizaria os dados do dashboard.');
+            
+            document.querySelectorAll('.habit-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    
+                    const checkedCount = document.querySelectorAll('.habit-checkbox.checked').length;
+                    const totalCount = document.querySelectorAll('.habit-checkbox').length;
+                    document.querySelector('.metric-card:nth-child(4) .metric-value').textContent = 
+                        `${checkedCount}/${totalCount}`;
+                });
+            });
+            
+            document.getElementById('apply-filters').addEventListener('click', function() {
+                alert('Filtros aplicados! Em um sistema real, isso atualizaria os dados do dashboard.');
+            });
         });
     </script>
 </body>
