@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas - Rosa Pastel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFF5F7;
+            color: #555;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .cabecalho {
+            background-color: #FFD6E0;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid #FFECF1;
+        }
+
+        h1 {
+            color: #D94D73;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            color: #E88AA4;
+            font-size: 1.1rem;
+        }
+
+        .formulario-tarefas {
+            padding: 25px;
+            background-color: #FFF0F5;
+            border-bottom: 1px solid #FFECF1;
+        }
+
+        .grupo-formulario {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #FFD6E0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #E88AA4;
+        }
+
+        button {
+            background-color: #FFB6C1;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #E88AA4;
+        }
+
+        .lista-tarefas {
+            padding: 25px;
+        }
+
+        h2 {
+            color: #D94D73;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .item-tarefa {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #FFF9FB;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #FFB6C1;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .item-tarefa:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .item-tarefa.concluida {
+            opacity: 0.7;
+            border-left-color: #A8E6CF;
+        }
+
+        .texto-tarefa {
+            flex: 1;
+            margin-left: 15px;
+            font-size: 1.1rem;
+        }
+
+        .item-tarefa.concluida .texto-tarefa {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .acoes-tarefa {
+            display: flex;
+            gap: 10px;
+        }
+
+        .botao-concluir, .botao-excluir {
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .botao-concluir {
+            background-color: #A8E6CF;
+        }
+
+        .botao-concluir:hover {
+            background-color: #88D4B5;
+        }
+
+        .botao-excluir {
+            background-color: #FF8BA0;
+        }
+
+        .botao-excluir:hover {
+            background-color: #E86A7F;
+        }
+
+        .estado-vazio {
+            text-align: center;
+            padding: 40px 20px;
+            color: #E88AA4;
+        }
+
+        .estado-vazio p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .rodape {
+            text-align: center;
+            padding: 20px;
+            background-color: #FFF0F5;
+            color: #E88AA4;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .grupo-formulario {
+                flex-direction: column;
+            }
+            
+            .item-tarefa {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .acoes-tarefa {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="cabecalho">
+            <h1>Minhas Tarefas</h1>
+            <p class="subtitulo">Organize seu dia com estilo</p>
+        </header>
+        
+        <div class="formulario-tarefas">
+            <div class="grupo-formulario">
+                <input type="text" id="entradaTarefa" placeholder="Digite uma nova tarefa...">
+                <button id="botaoAdicionarTarefa">Adicionar Tarefa</button>
+            </div>
+        </div>
+        
+        <div class="lista-tarefas">
+            <h2>Suas Tarefas</h2>
+            <div id="containerTarefas">
+                <div class="estado-vazio">
+                    <p>Nenhuma tarefa adicionada ainda.</p>
+                    <p>Comece adicionando sua primeira tarefa!</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="rodape">
+            <p>© 2025 Prio</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const entradaTarefa = document.getElementById('entradaTarefa');
+            const botaoAdicionarTarefa = document.getElementById('botaoAdicionarTarefa');
+            const containerTarefas = document.getElementById('containerTarefas');
+            
+        
+            let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+            function renderizarTarefas() {
+                containerTarefas.innerHTML = '';
+                
+                if (tarefas.length === 0) {
+                    containerTarefas.innerHTML = `
+                        <div class="estado-vazio">
+                            <p>Nenhuma tarefa adicionada ainda.</p>
+                            <p>Comece adicionando sua primeira tarefa!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                tarefas.forEach((tarefa, indice) => {
+                    const elementoItem = document.createElement('div');
+                    elementoItem.className = `item-tarefa ${tarefa.concluida ? 'concluida' : ''}`;
+                    elementoItem.innerHTML = `
+                        <input type="checkbox" ${tarefa.concluida ? 'checked' : ''} onchange="alternarTarefa(${indice})">
+                        <span class="texto-tarefa">${tarefa.texto}</span>
+                        <div class="acoes-tarefa">
+                            <button class="botao-concluir" onclick="alternarTarefa(${indice})">${tarefa.concluida ? 'Desmarcar' : 'Concluir'}</button>
+                            <button class="botao-excluir" onclick="excluirTarefa(${indice})">Excluir</button>
+                        </div>
+                    `;
+                    containerTarefas.appendChild(elementoItem);
+                });
+            }
+        
+            botaoAdicionarTarefa.addEventListener('click', function() {
+                const texto = entradaTarefa.value.trim();
+                if (texto) {
+                    tarefas.push({ texto: texto, concluida: false });
+                    salvarTarefas();
+                    renderizarTarefas();
+                    entradaTarefa.value = '';
+                }
+            });
+            
+            entradaTarefa.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    botaoAdicionarTarefa.click();
+                }
+            });
+            
+            function salvarTarefas() {
+                localStorage.setItem('tarefas', JSON.stringify(tarefas));
+            }
+            
+            window.alternarTarefa = function(indice) {
+                tarefas[indice].concluida = !tarefas[indice].concluida;
+                salvarTarefas();
+                renderizarTarefas();
+            };
+            
+            window.excluirTarefa = function(indice) {
+                if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                    tarefas.splice(indice, 1);
+                    salvarTarefas();
+                    renderizarTarefas();
+                }
+            };
+
+            renderizarTarefas();
+        });
+    </script>
+</body>
+</html>
