@@ -12,12 +12,79 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        .navbar {
+            background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: #D94D73;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px 0;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .navbar-item {
+            position: relative;
+        }
+
+        .navbar-link {
+            color: #D94D73;
+            text-decoration: none;
+            padding: 15px 12px;
+            display: block;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
+        }
+
+        .navbar-link.ativo {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #B8375E;
+        }
+
+        .menu-hamburguer {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .menu-hamburguer span {
+            width: 25px;
+            height: 3px;
+            background-color: #D94D73;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
         body {
             background-color: #f9f4f5;
             color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
             padding: 20px;
         }
@@ -29,6 +96,7 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            margin: 0 auto;
         }
 
         .header {
@@ -226,6 +294,37 @@
         }
 
         @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+                flex-direction: column;
+                padding: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .navbar-menu.ativo {
+                display: flex;
+            }
+
+            .menu-hamburguer {
+                display: flex;
+            }
+
+            .navbar-item {
+                width: 100%;
+            }
+
+            .navbar-link {
+                padding: 12px 15px;
+                border-radius: 5px;
+                margin: 2px 0;
+            }
+
             .content {
                 padding: 25px;
             }
@@ -245,13 +344,54 @@
             }
         }
 
-        /* Ícones */
         .icon {
             font-style: normal;
         }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">Prio</a>
+            
+            <div class="menu-hamburguer" id="menuHamburguer">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="navbar-menu" id="navbarMenu">
+                <li class="navbar-item">
+                    <a href="usuarios.html" class="navbar-link">Usuários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="metricas.html" class="navbar-link">Métricas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="lembretes.html" class="navbar-link">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="header">
             <h1>Criar Novo Projeto</h1>
@@ -331,103 +471,108 @@
     </div>
 
     <script>
-        // Elementos do formulário
-        const nomeProjeto = document.getElementById('nome-projeto');
-        const descricaoProjeto = document.getElementById('descricao-projeto');
-        const dataInicio = document.getElementById('data-inicio');
-        const dataTermino = document.getElementById('data-termino');
-        const corProjeto = document.getElementById('cor-projeto');
-        
-        // Elementos da prévia
-        const previewTitle = document.getElementById('preview-title');
-        const previewDescription = document.getElementById('preview-description');
-        const previewColor = document.getElementById('preview-color');
-        const previewInicio = document.getElementById('preview-inicio');
-        const previewTermino = document.getElementById('preview-termino');
-        
-        // Atualizar prévia em tempo real
-        nomeProjeto.addEventListener('input', updatePreview);
-        descricaoProjeto.addEventListener('input', updatePreview);
-        dataInicio.addEventListener('change', updatePreview);
-        dataTermino.addEventListener('change', updatePreview);
-        
-        // Seleção de cores
-        const colorOptions = document.querySelectorAll('.color-option');
-        colorOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remover seleção anterior
-                colorOptions.forEach(opt => opt.classList.remove('selected'));
-                // Adicionar seleção atual
-                this.classList.add('selected');
-                // Atualizar cor selecionada
-                const selectedColor = this.getAttribute('data-color');
-                corProjeto.value = selectedColor;
-                previewColor.style.backgroundColor = selectedColor;
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuHamburguer = document.getElementById('menuHamburguer');
+            const navbarMenu = document.getElementById('navbarMenu');
+            
+            menuHamburguer.addEventListener('click', function() {
+                navbarMenu.classList.toggle('ativo');
             });
-        });
-        
-        function updatePreview() {
-            // Atualizar título
-            previewTitle.textContent = nomeProjeto.value || 'Nome do Projeto';
             
-            // Atualizar descrição
-            previewDescription.textContent = descricaoProjeto.value || 'Descrição do projeto aparecerá aqui...';
+            const navbarLinks = document.querySelectorAll('.navbar-link');
+            navbarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navbarMenu.classList.remove('ativo');
+                    }
+                });
+            });
             
-            // Atualizar datas
-            if (dataInicio.value) {
-                const inicioDate = new Date(dataInicio.value);
-                previewInicio.textContent = `Início: ${inicioDate.toLocaleDateString('pt-BR')}`;
-            } else {
-                previewInicio.textContent = 'Início: --/--/----';
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            navbarLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
+                    link.classList.add('ativo');
+                }
+            });
+
+            const nomeProjeto = document.getElementById('nome-projeto');
+            const descricaoProjeto = document.getElementById('descricao-projeto');
+            const dataInicio = document.getElementById('data-inicio');
+            const dataTermino = document.getElementById('data-termino');
+            const corProjeto = document.getElementById('cor-projeto');
+            
+            const previewTitle = document.getElementById('preview-title');
+            const previewDescription = document.getElementById('preview-description');
+            const previewColor = document.getElementById('preview-color');
+            const previewInicio = document.getElementById('preview-inicio');
+            const previewTermino = document.getElementById('preview-termino');
+            
+            nomeProjeto.addEventListener('input', updatePreview);
+            descricaoProjeto.addEventListener('input', updatePreview);
+            dataInicio.addEventListener('change', updatePreview);
+            dataTermino.addEventListener('change', updatePreview);
+            
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const selectedColor = this.getAttribute('data-color');
+                    corProjeto.value = selectedColor;
+                    previewColor.style.backgroundColor = selectedColor;
+                });
+            });
+            
+            function updatePreview() {
+                previewTitle.textContent = nomeProjeto.value || 'Nome do Projeto';
+                previewDescription.textContent = descricaoProjeto.value || 'Descrição do projeto aparecerá aqui...';
+                
+                if (dataInicio.value) {
+                    const inicioDate = new Date(dataInicio.value);
+                    previewInicio.textContent = `Início: ${inicioDate.toLocaleDateString('pt-BR')}`;
+                } else {
+                    previewInicio.textContent = 'Início: --/--/----';
+                }
+                
+                if (dataTermino.value) {
+                    const terminoDate = new Date(dataTermino.value);
+                    previewTermino.textContent = `Término: ${terminoDate.toLocaleDateString('pt-BR')}`;
+                } else {
+                    previewTermino.textContent = 'Término: --/--/----';
+                }
             }
             
-            if (dataTermino.value) {
-                const terminoDate = new Date(dataTermino.value);
-                previewTermino.textContent = `Término: ${terminoDate.toLocaleDateString('pt-BR')}`;
-            } else {
-                previewTermino.textContent = 'Término: --/--/----';
-            }
-        }
-        
-        // Envio do formulário
-        document.getElementById('projectForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            document.getElementById('projectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (dataTermino.value && dataInicio.value > dataTermino.value) {
+                    alert('A data de término não pode ser anterior à data de início!');
+                    return;
+                }
+                
+                const projectData = {
+                    nome: nomeProjeto.value,
+                    descricao: descricaoProjeto.value,
+                    dataInicio: dataInicio.value,
+                    dataTermino: dataTermino.value,
+                    cor: corProjeto.value
+                };
+                
+                console.log('Dados do projeto:', projectData);
+                alert('Projeto criado com sucesso!');
+            });
             
-            // Validar datas
-            if (dataTermino.value && dataInicio.value > dataTermino.value) {
-                alert('A data de término não pode ser anterior à data de início!');
-                return;
-            }
+            document.querySelector('.btn-secondary').addEventListener('click', function() {
+                window.history.back();
+            });
             
-            // Coletar dados do formulário
-            const projectData = {
-                nome: nomeProjeto.value,
-                descricao: descricaoProjeto.value,
-                dataInicio: dataInicio.value,
-                dataTermino: dataTermino.value,
-                cor: corProjeto.value
-            };
+            updatePreview();
             
-            // Aqui você normalmente enviaria os dados para o servidor
-            console.log('Dados do projeto:', projectData);
-            
-            alert('Projeto criado com sucesso!');
-            // Redirecionar para a página de projetos ou dashboard
-            // window.location.href = 'projetos.html';
+            const today = new Date().toISOString().split('T')[0];
+            dataInicio.min = today;
+            dataTermino.min = today;
         });
-        
-        // Voltar para a página anterior
-        document.querySelector('.btn-secondary').addEventListener('click', function() {
-            window.history.back();
-        });
-        
-        // Inicializar prévia
-        updatePreview();
-        
-        // Definir data mínima como hoje
-        const today = new Date().toISOString().split('T')[0];
-        dataInicio.min = today;
-        dataTermino.min = today;
     </script>
 </body>
 </html>
