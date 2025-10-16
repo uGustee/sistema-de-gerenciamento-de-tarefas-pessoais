@@ -238,7 +238,6 @@
         document.getElementById('form-notificacao').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Coletar dados do formulário
             const idNotificacao = document.getElementById('id_notificacao').value;
             const idUsuario = document.getElementById('id_usuario').value;
             const titulo = document.getElementById('titulo').value;
@@ -247,12 +246,11 @@
             const dataEnvio = document.getElementById('data_envio').value;
             const link = document.getElementById('link').value;
             const criadoEm = document.getElementById('criado_em').value;
-            
-            // Criar elemento de notificação
+        
             const notificacaoElement = document.createElement('div');
             notificacaoElement.className = 'notificacao';
             
-            // Formatar data para exibição
+            
             const dataFormatada = new Date(dataEnvio).toLocaleDateString('pt-BR');
             const criadoEmFormatado = new Date(criadoEm).toLocaleString('pt-BR');
             
@@ -269,24 +267,24 @@
                 ${link ? `<div><a href="${link}" class="notificacao-link" target="_blank">${link}</a></div>` : ''}
             `;
             
-            // Adicionar à lista de notificações
+        
             const listaNotificacoes = document.getElementById('lista-notificacoes');
             
-            // Remover mensagem de estado vazio se for a primeira notificação
+            
             if (listaNotificacoes.querySelector('.empty-state')) {
                 listaNotificacoes.innerHTML = '';
             }
             
             listaNotificacoes.prepend(notificacaoElement);
             
-            // Limpar formulário
+    
             document.getElementById('form-notificacao').reset();
             
-            // Exibir mensagem de confirmação
+        
             alert('Notificação cadastrada com sucesso!');
         });
         
-        // Definir data atual como padrão para alguns campos
+        
         document.getElementById('data_envio').valueAsDate = new Date();
         document.getElementById('criado_em').valueAsDate = new Date();
     </script>
