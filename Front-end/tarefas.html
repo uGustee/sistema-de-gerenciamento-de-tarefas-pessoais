@@ -329,7 +329,6 @@
                     const elementoItem = document.createElement('div');
                     elementoItem.className = `item-tarefa ${tarefa.concluida ? 'concluida' : ''}`;
                     
-                    // Calcular progresso das subtarefas
                     const totalSubtarefas = tarefa.subtarefas ? tarefa.subtarefas.length : 0;
                     const subtarefasConcluidas = tarefa.subtarefas ? 
                         tarefa.subtarefas.filter(sub => sub.concluida).length : 0;
