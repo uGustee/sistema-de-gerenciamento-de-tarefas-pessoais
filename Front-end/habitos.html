@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitBloom - Acompanhamento de Hábitos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--primary-pastel);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .logo i {
+            color: var(--accent-pastel);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-pastel), var(--accent-pastel));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            box-shadow: var(--shadow);
+        }
+        
+        .dashboard-title {
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .filter-section {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid var(--primary-pastel);
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        select, input, button {
+            padding: 10px 15px;
+            border: 1px solid var(--primary-pastel);
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: var(--white);
+            transition: all 0.3s ease;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-pastel);
+            box-shadow: 0 0 0 3px rgba(241, 176, 183, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--primary-pastel), var(--accent-pastel));
+            color: var(--text-dark);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            align-self: flex-end;
+            height: 40px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border: 1px solid var(--primary-pastel);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary-pastel), var(--accent-pastel));
+            font-size: 20px;
+        }
+        
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .metric-title {
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .metric-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .positive {
+            color: #28a745;
+        }
+        
+        .negative {
+            color: #dc3545;
+        }
+        
+        .habits-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .habits-container, .streak-container {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--primary-pastel);
+        }
+        
+        .habits-title, .streak-title {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .habits-list {
+            list-style: none;
+        }
+        
+        .habit-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--primary-pastel);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .habit-item:last-child {
+            border-bottom: none;
+        }
+        
+        .habit-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .habit-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .habit-frequency {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .habit-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-pastel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .habit-checkbox.checked {
+            background-color: var(--accent-pastel);
+            color: var(--white);
+        }
+        
+        .streak-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .streak-chart {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+        
+        .streak-bar {
+            width: 30px;
+            background: linear-gradient(to top, var(--primary-pastel), var(--accent-pastel));
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .streak-day {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .chart-container {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--primary-pastel);
+        }
+        
+        .chart-title {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .chart {
+            height: 300px;
+            position: relative;
+        }
+        
+        .recent-activity {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--primary-pastel);
+        }
+        
+        .activity-title {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--primary-pastel);
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-time {
+            color: var(--text-light);
+            font-size: 14px;
+            min-width: 80px;
+            background-color: var(--light-pastel);
+            padding: 5px 10px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        
+        .activity-text {
+            flex: 1;
+        }
+        
+        .activity-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--light-pastel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-pastel);
+        }
+        
+        @media (max-width: 768px) {
+            .charts-section, .habits-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <span>HabitBloom</span>
+            </div>
+            <div class="user-info">
+                <span>Olá, Maria Silva</span>
+                <div class="user-avatar">MS</div>
+            </div>
+        </header>
+        
+        <h1 class="dashboard-title">Dashboard de Hábitos</h1>
+        
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="period">Período</label>
+                <select id="period">
+                    <option value="today">Hoje</option>
+                    <option value="week" selected>Esta Semana</option>
+                    <option value="month">Este Mês</option>
+                    <option value="quarter">Este Trimestre</option>
+                    <option value="year">Este Ano</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="start-date">Data Inicial</label>
+                <input type="date" id="start-date">
+            </div>
+            
+            <div class="filter-group">
+                <label for="end-date">Data Final</label>
+                <input type="date" id="end-date">
+            </div>
+            
+            <button id="apply-filters">Aplicar Filtros</button>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-title">Hábitos Ativos</div>
+                    <div class="metric-icon">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                </div>
+                <div class="metric-value">12</div>
+                <div class="metric-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Adicionou 2 novos hábitos</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-title">Taxa de Conclusão</div>
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="metric-value">78%</div>
+                <div class="metric-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>5% maior que na semana passada</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-title">Sequência Atual</div>
+                    <div class="metric-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                </div>
+                <div class="metric-value">16 dias</div>
+                <div class="metric-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Maior sequência: 24 dias</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-title">Hábitos Concluídos Hoje</div>
+                    <div class="metric-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="metric-value">5/8</div>
+                <div class="metric-change negative">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>2 hábitos pendentes</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="habits-section">
+            <div class="habits-container">
+                <h3 class="habits-title">Meus Hábitos de Hoje</h3>
+                <ul class="habits-list">
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Meditação Matinal</div>
+                            <div class="habit-frequency">Diário • 10 min</div>
+                        </div>
+                        <div class="habit-checkbox checked">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Exercício Físico</div>
+                            <div class="habit-frequency">Seg, Qua, Sex • 30 min</div>
+                        </div>
+                        <div class="habit-checkbox">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Leitura</div>
+                            <div class="habit-frequency">Diário • 20 min</div>
+                        </div>
+                        <div class="habit-checkbox checked">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Beber Água</div>
+                            <div class="habit-frequency">Diário • 2L</div>
+                        </div>
+                        <div class="habit-checkbox checked">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Estudar Inglês</div>
+                            <div class="habit-frequency">Ter, Qui, Sáb • 25 min</div>
+                        </div>
+                        <div class="habit-checkbox">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="streak-container">
+                <h3 class="streak-title">Sequência de Hábitos</h3>
+                <div class="streak-chart">
+                    <div class="streak-bar" style="height: 80%;">
+                        <div class="streak-day">Seg</div>
+                    </div>
+                    <div class="streak-bar" style="height: 90%;">
+                        <div class="streak-day">Ter</div>
+                    </div>
+                    <div class="streak-bar" style="height: 70%;">
+                        <div class="streak-day">Qua</div>
+                    </div>
+                    <div class="streak-bar" style="height: 95%;">
+                        <div class="streak-day">Qui</div>
+                    </div>
+                    <div class="streak-bar" style="height: 85%;">
+                        <div class="streak-day">Sex</div>
+                    </div>
+                    <div class="streak-bar" style="height: 60%;">
+                        <div class="streak-day">Sáb</div>
+                    </div>
+                    <div class="streak-bar" style="height: 75%;">
+                        <div class="streak-day">Dom</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3 class="chart-title">Progresso de Hábitos (Últimos 7 dias)</h3>
+                <div class="chart">
+                    <canvas id="habitsChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 class="chart-title">Distribuição por Frequência</h3>
+                <div class="chart">
+                    <canvas id="frequencyChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recent-activity">
+            <h3 class="activity-title">Atividade Recente</h3>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="activity-time">08:30</div>
+                    <div class="activity-text">Você completou o hábito "Meditação Matinal"</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="activity-time">Ontem</div>
+                    <div class="activity-text">Você adicionou o hábito "Beber 2L de água por dia"</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="activity-time">Ontem</div>
+                    <div class="activity-text">Você atingiu 16 dias de sequência em "Leitura Diária"</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="activity-time">3 dias atrás</div>
+                    <div class="activity-text">Você completou todos os hábitos do dia pela 5ª vez esta semana</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="activity-time">5 dias atrás</div>
+                    <div class="activity-text">Sua taxa de conclusão aumentou 12% esta semana</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Configuração de datas padrão
+        const today = new Date();
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(today.getDate() - 7);
+        
+        document.getElementById('start-date').valueAsDate = oneWeekAgo;
+        document.getElementById('end-date').valueAsDate = today;
+        
+        // Gráfico de progresso de hábitos
+        const habitsCtx = document.getElementById('habitsChart').getContext('2d');
+        const habitsChart = new Chart(habitsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Meditação', 'Exercício', 'Leitura', 'Água', 'Inglês', 'Organização', 'Alimentação'],
+                datasets: [{
+                    label: 'Taxa de Conclusão (%)',
+                    data: [85, 70, 90, 95, 65, 80, 75],
+                    backgroundColor: [
+                        '#f8d7da',
+                        '#f5c6cb',
+                        '#f1b0b7',
+                        '#e6a4ad',
+                        '#fce4ec',
+                        '#f8d7da',
+                        '#f5c6cb'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de distribuição por frequência
+        const frequencyCtx = document.getElementById('frequencyChart').getContext('2d');
+        const frequencyChart = new Chart(frequencyCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Diário', '3x/Semana', '2x/Semana', 'Semanal', 'Personalizado'],
+                datasets: [{
+                    data: [5, 3, 2, 1, 1],
+                    backgroundColor: [
+                        '#f8d7da',
+                        '#f5c6cb',
+                        '#f1b0b7',
+                        '#e6a4ad',
+                        '#fce4ec'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+        
+        // Interação com checkboxes de hábitos
+        document.querySelectorAll('.habit-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                
+                // Atualizar métrica de hábitos concluídos hoje
+                const checkedCount = document.querySelectorAll('.habit-checkbox.checked').length;
+                const totalCount = document.querySelectorAll('.habit-checkbox').length;
+                document.querySelector('.metric-card:nth-child(4) .metric-value').textContent = 
+                    `${checkedCount}/${totalCount}`;
+            });
+        });
+        
+        // Simulação de filtros
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            alert('Filtros aplicados! Em um sistema real, isso atualizaria os dados do dashboard.');
+        });
+    </script>
+</body>
+</html>
