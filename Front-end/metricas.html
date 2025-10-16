@@ -473,7 +473,7 @@
     </div>
 
     <script>
-        // Configuração de datas padrão
+    
         const today = new Date();
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(today.getDate() - 7);
@@ -481,7 +481,7 @@
         document.getElementById('start-date').valueAsDate = oneWeekAgo;
         document.getElementById('end-date').valueAsDate = today;
         
-        // Gráfico de tarefas criadas vs concluídas
+
         const tasksCtx = document.getElementById('tasksChart').getContext('2d');
         const tasksChart = new Chart(tasksCtx, {
             type: 'line',
@@ -522,7 +522,6 @@
             }
         });
         
-        // Gráfico de distribuição por categoria
         const categoryCtx = document.getElementById('categoryChart').getContext('2d');
         const categoryChart = new Chart(categoryCtx, {
             type: 'doughnut',
@@ -551,7 +550,6 @@
             }
         });
         
-        // Simulação de filtros
         document.getElementById('apply-filters').addEventListener('click', function() {
             alert('Filtros aplicados! Em um sistema real, isso atualizaria os dados do dashboard.');
         });
