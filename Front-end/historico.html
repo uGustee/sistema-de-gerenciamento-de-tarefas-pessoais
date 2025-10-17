@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Atividades</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: #f8e1e7;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #d87a94;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .history-section {
+            padding: 30px;
+        }
+        
+        .day-group {
+            margin-bottom: 30px;
+        }
+        
+        .day-title {
+            background: #e8a2b5;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .activity {
+            background: #fafafa;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border-left: 5px solid #d87a94;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .activity:hover {
+            transform: translateX(5px);
+            background: #f8e1e7;
+            box-shadow: 0 4px 12px rgba(216, 122, 148, 0.2);
+        }
+        
+        .icon {
+            font-size: 1.5em;
+            width: 40px;
+            height: 40px;
+            background: #d87a94;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: bold;
+            color: #d87a94;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+        
+        .activity-desc {
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .activity-time {
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .task { border-left-color: #d87a94; }
+        .task .icon { background: #d87a94; }
+        
+        .comment { border-left-color: #e8a2b5; }
+        .comment .icon { background: #e8a2b5; }
+        
+        .complete { border-left-color: #a8d5ba; }
+        .complete .icon { background: #a8d5ba; }
+        
+        .tag { border-left-color: #f5c6d6; }
+        .tag .icon { background: #f5c6d6; }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-state .icon {
+            background: #f5c6d6;
+            margin: 0 auto 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Histórico</h1>
+            <p class="subtitle">Registro das suas atividades</p>
+        </header>
+        
+        <div class="history-section">
+            <!-- Hoje -->
+            <div class="day-group">
+                <div class="day-title">
+                    📅 Hoje - 15 de Outubro
+                </div>
+                
+                <div class="activity task">
+                    <div class="icon">📝</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Tarefa Criada</div>
+                        <div class="activity-desc">"Revisar documento de requisitos do projeto"</div>
+                        <div class="activity-time">14:30</div>
+                    </div>
+                </div>
+                
+                <div class="activity comment">
+                    <div class="icon">💬</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Comentário Adicionado</div>
+                        <div class="activity-desc">"Precisamos ajustar o cronograma da apresentação"</div>
+                        <div class="activity-time">13:15</div>
+                    </div>
+                </div>
+                
+                <div class="activity complete">
+                    <div class="icon">✅</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Tarefa Concluída</div>
+                        <div class="activity-desc">"Enviar relatório mensal para a diretoria"</div>
+                        <div class="activity-time">11:00</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ontem -->
+            <div class="day-group">
+                <div class="day-title">
+                    📅 Ontem - 14 de Outubro
+                </div>
+                
+                <div class="activity tag">
+                    <div class="icon">🏷️</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Etiqueta Adicionada</div>
+                        <div class="activity-desc">Marcada como "Urgente" na tarefa "Revisar contrato"</div>
+                        <div class="activity-time">16:45</div>
+                    </div>
+                </div>
+                
+                <div class="activity task">
+                    <div class="icon">📝</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Tarefa Criada</div>
+                        <div class="activity-desc">"Preparar reunião com cliente importante"</div>
+                        <div class="activity-time">09:30</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 12 de Outubro -->
+            <div class="day-group">
+                <div class="day-title">
+                    📅 12 de Outubro
+                </div>
+                
+                <div class="activity comment">
+                    <div class="icon">💬</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Comentário Adicionado</div>
+                        <div class="activity-desc">"Vamos precisar de mais recursos para este projeto"</div>
+                        <div class="activity-time">17:15</div>
+                    </div>
+                </div>
+                
+                <div class="activity task">
+                    <div class="icon">📝</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Tarefa Criada</div>
+                        <div class="activity-desc">"Preparar material de treinamento para nova equipe"</div>
+                        <div class="activity-time">14:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
