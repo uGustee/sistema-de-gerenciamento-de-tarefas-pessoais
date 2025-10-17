@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Etiquetas</title>
+    <title>Tarefas com Etiquetas</title>
     <style>
         :root {
             --rosa-pastel: #f8d7da;
             --rosa-pastel-escuro: #f1b0b7;
+            --rosa-medio: #e8a2b5;
+            --rosa-escuro: #d87a94;
             --branco: #ffffff;
             --cinza-claro: #f8f9fa;
             --cinza-escuro: #343a40;
+            --verde: #a8d5ba;
+            --azul: #aed6f1;
+            --amarelo: #f9e79f;
         }
         
         * {
@@ -73,22 +78,6 @@
             background-color: rgba(255, 255, 255, 0.4);
             color: #B8375E;
         }
-
-        .menu-hamburguer {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .menu-hamburguer span {
-            width: 25px;
-            height: 3px;
-            background-color: #D94D73;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
         
         body {
             background-color: var(--cinza-claro);
@@ -97,128 +86,246 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             background-color: var(--branco);
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
         header {
             background-color: var(--rosa-pastel);
-            padding: 20px;
+            padding: 30px;
             text-align: center;
             border-bottom: 2px solid var(--rosa-pastel-escuro);
         }
         
         h1 {
-            color: var(--cinza-escuro);
+            color: var(--rosa-escuro);
             margin-bottom: 10px;
+            font-size: 2.5rem;
         }
         
         .descricao {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
         
-        .form-container {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0;
+        }
+        
+        .sidebar {
+            background: #fafafa;
+            padding: 25px;
+            border-right: 2px solid var(--rosa-pastel);
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .section-title {
+            color: var(--rosa-escuro);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--rosa-pastel);
+            font-size: 1.5rem;
         }
         
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 600;
+            color: var(--rosa-escuro);
         }
         
-        input, select {
+        input, textarea, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 2px solid var(--rosa-pastel);
+            border-radius: 8px;
             font-size: 1rem;
+            transition: border-color 0.3s;
         }
         
-        .color-preview {
-            width: 50px;
-            height: 30px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 5px;
-            display: inline-block;
-            vertical-align: middle;
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--rosa-medio);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
         }
         
         button {
-            background-color: var(--rosa-pastel);
-            color: var(--cinza-escuro);
+            background-color: var(--rosa-escuro);
+            color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1rem;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         
         button:hover {
-            background-color: var(--rosa-pastel-escuro);
+            background-color: var(--rosa-medio);
+            transform: translateY(-2px);
         }
         
-        .etiquetas-container {
-            padding: 20px;
-        }
-        
-        .etiqueta {
-            background-color: var(--cinza-claro);
-            border-left: 4px solid var(--rosa-pastel);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 0 5px 5px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .etiqueta-cor {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 15px;
-            border: 2px solid #ddd;
-        }
-        
-        .etiqueta-info {
-            flex: 1;
-        }
-        
-        .etiqueta-nome {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .etiqueta-detalhes {
+        .btn-small {
+            padding: 8px 15px;
             font-size: 0.9rem;
-            color: #666;
         }
         
-        .etiqueta-id {
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .tag {
+            background: var(--rosa-medio);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tag-trabalho { background: var(--azul); }
+        .tag-pessoal { background: var(--verde); }
+        .tag-urgente { background: var(--amarelo); color: var(--cinza-escuro); }
+        .tag-casa { background: var(--rosa-escuro); }
+        
+        .task-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .task-card {
+            background: #fafafa;
+            border: 2px solid var(--rosa-pastel);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(216, 122, 148, 0.2);
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .task-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--rosa-escuro);
+        }
+        
+        .task-priority {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: var(--rosa-pastel-escuro);
+            color: white;
+        }
+        
+        .priority-alta { background: var(--rosa-escuro); }
+        .priority-media { background: var(--rosa-medio); }
+        .priority-baixa { background: var(--rosa-pastel); color: var(--cinza-escuro); }
+        
+        .task-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .task-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .task-description {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .task-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .task-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-concluir {
+            background: var(--verde);
+        }
+        
+        .btn-editar {
+            background: var(--azul);
+        }
+        
+        .btn-excluir {
+            background: var(--rosa-escuro);
         }
         
         .empty-state {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
             color: #666;
         }
         
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--rosa-pastel);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+        
         @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid var(--rosa-pastel);
+            }
+            
             .navbar-menu {
                 display: none;
                 position: absolute;
@@ -238,6 +345,18 @@
 
             .menu-hamburguer {
                 display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+            .menu-hamburguer span {
+                width: 25px;
+                height: 3px;
+                background-color: #D94D73;
+                margin: 3px 0;
+                transition: 0.3s;
+                border-radius: 2px;
             }
 
             .navbar-item {
@@ -249,56 +368,29 @@
                 border-radius: 5px;
                 margin: 2px 0;
             }
-
-            .etiqueta {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .etiqueta-cor {
-                margin-bottom: 10px;
-            }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="#" class="navbar-logo">Prio</a>
+            <a href="#" class="navbar-logo">Sistema de Tarefas</a>
             
-            <div class="menu-hamburguer" id="menuHamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="navbar-menu" id="navbarMenu">
+            <ul class="navbar-menu">
                 <li class="navbar-item">
                     <a href="usuarios.html" class="navbar-link">Usuários</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                    <a href="tarefas.html" class="navbar-link ativo">Tarefas</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="metricas.html" class="navbar-link">Métricas</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="lembretes.html" class="navbar-link">Lembretes</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="habitos.html" class="navbar-link">Hábitos</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link ativo">Etiquetas</a>
+                    <a href="historico.html" class="navbar-link">Histórico</a>
                 </li>
                 <li class="navbar-item">
                     <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
                 </li>
             </ul>
         </div>
@@ -306,128 +398,147 @@
     
     <div class="container">
         <header>
-            <h1>Sistema de Etiquetas</h1>
-            <p class="descricao">Cadastre e visualize suas etiquetas</p>
+            <h1>📋 Tarefas com Etiquetas</h1>
+            <p class="descricao">Organize suas tarefas com sistema de etiquetas</p>
         </header>
         
-        <div class="form-container">
-            <h2>Cadastro de Etiqueta</h2>
-            <form id="form-etiqueta">
-                <div class="form-group">
-                    <label for="id_etiqueta">ID da etiqueta:</label>
-                    <input type="text" id="id_etiqueta" required>
-                </div>
+        <div class="main-content">
+            <div class="sidebar">
+                <h2 class="section-title">Nova Tarefa</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="titulo">Título da Tarefa</label>
+                        <input type="text" id="titulo" placeholder="Digite o título da tarefa">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" placeholder="Descreva a tarefa"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="prioridade">Prioridade</label>
+                        <select id="prioridade">
+                            <option value="baixa">Baixa</option>
+                            <option value="media">Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Etiquetas</label>
+                        <div class="tags-container">
+                            <span class="tag tag-trabalho">Trabalho</span>
+                            <span class="tag tag-pessoal">Pessoal</span>
+                            <span class="tag tag-urgente">Urgente</span>
+                            <span class="tag tag-casa">Casa</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data">Data de Vencimento</label>
+                        <input type="date" id="data">
+                    </div>
+                    
+                    <button type="submit">Adicionar Tarefa</button>
+                </form>
+            </div>
+            
+            <div class="content">
+                <h2 class="section-title">Minhas Tarefas</h2>
                 
-                <div class="form-group">
-                    <label for="nome_etiqueta">Nome da etiqueta:</label>
-                    <input type="text" id="nome_etiqueta" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="cor_etiqueta">Cor da etiqueta:</label>
-                    <input type="color" id="cor_etiqueta" value="#f8d7da" required>
-                    <div class="color-preview" id="color-preview" style="background-color: #f8d7da;"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="id_usuario">ID do usuário:</label>
-                    <input type="text" id="id_usuario" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="criado_em">Criado em:</label>
-                    <input type="datetime-local" id="criado_em" required>
-                </div>
-                
-                <button type="submit">Cadastrar Etiqueta</button>
-            </form>
-        </div>
-        
-        <div class="etiquetas-container">
-            <h2>Etiquetas Cadastradas</h2>
-            <div id="lista-etiquetas">
-                <div class="empty-state">
-                    <p>Nenhuma etiqueta cadastrada ainda.</p>
-                    <p>Preencha o formulário acima para adicionar a primeira etiqueta.</p>
+                <div class="task-list">
+                    <!-- Tarefa 1 -->
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">Revisar Documento de Requisitos</div>
+                            <div class="task-priority priority-alta">Alta</div>
+                        </div>
+                        <div class="task-meta">
+                            <div class="task-date">📅 Vence em: 20/10/2023</div>
+                        </div>
+                        <div class="task-description">
+                            Revisar e aprovar o documento de requisitos do novo projeto antes da reunião com o cliente.
+                        </div>
+                        <div class="task-tags">
+                            <span class="tag tag-trabalho">Trabalho</span>
+                            <span class="tag tag-urgente">Urgente</span>
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn-concluir btn-small">✅ Concluir</button>
+                            <button class="btn-editar btn-small">✏️ Editar</button>
+                            <button class="btn-excluir btn-small">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tarefa 2 -->
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">Compras do Mês</div>
+                            <div class="task-priority priority-media">Média</div>
+                        </div>
+                        <div class="task-meta">
+                            <div class="task-date">📅 Vence em: 18/10/2023</div>
+                        </div>
+                        <div class="task-description">
+                            Fazer compras de supermercado para o mês. Incluir itens de limpeza e alimentos.
+                        </div>
+                        <div class="task-tags">
+                            <span class="tag tag-casa">Casa</span>
+                            <span class="tag tag-pessoal">Pessoal</span>
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn-concluir btn-small">✅ Concluir</button>
+                            <button class="btn-editar btn-small">✏️ Editar</button>
+                            <button class="btn-excluir btn-small">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tarefa 3 -->
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">Preparar Apresentação</div>
+                            <div class="task-priority priority-alta">Alta</div>
+                        </div>
+                        <div class="task-meta">
+                            <div class="task-date">📅 Vence em: 16/10/2023</div>
+                        </div>
+                        <div class="task-description">
+                            Preparar slides e material para apresentação do projeto na reunião de diretoria.
+                        </div>
+                        <div class="task-tags">
+                            <span class="tag tag-trabalho">Trabalho</span>
+                            <span class="tag tag-urgente">Urgente</span>
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn-concluir btn-small">✅ Concluir</button>
+                            <button class="btn-editar btn-small">✏️ Editar</button>
+                            <button class="btn-excluir btn-small">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Tarefa 4 -->
+                    <div class="task-card">
+                        <div class="task-header">
+                            <div class="task-title">Exercícios Físicos</div>
+                            <div class="task-priority priority-baixa">Baixa</div>
+                        </div>
+                        <div class="task-meta">
+                            <div class="task-date">📅 Recorrente</div>
+                        </div>
+                        <div class="task-description">
+                            Fazer 30 minutos de exercícios físicos - caminhada ou yoga.
+                        </div>
+                        <div class="task-tags">
+                            <span class="tag tag-pessoal">Pessoal</span>
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn-concluir btn-small">✅ Concluir</button>
+                            <button class="btn-editar btn-small">✏️ Editar</button>
+                            <button class="btn-excluir btn-small">🗑️ Excluir</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuHamburguer = document.getElementById('menuHamburguer');
-            const navbarMenu = document.getElementById('navbarMenu');
-            
-            menuHamburguer.addEventListener('click', function() {
-                navbarMenu.classList.toggle('ativo');
-            });
-            
-            const navbarLinks = document.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navbarMenu.classList.remove('ativo');
-                    }
-                });
-            });
-            
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navbarLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
-                    link.classList.add('ativo');
-                }
-            });
-
-            document.getElementById('cor_etiqueta').addEventListener('input', function() {
-                document.getElementById('color-preview').style.backgroundColor = this.value;
-            });
-            
-            document.getElementById('form-etiqueta').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const idEtiqueta = document.getElementById('id_etiqueta').value;
-                const nomeEtiqueta = document.getElementById('nome_etiqueta').value;
-                const corEtiqueta = document.getElementById('cor_etiqueta').value;
-                const idUsuario = document.getElementById('id_usuario').value;
-                const criadoEm = document.getElementById('criado_em').value;
-                
-                const etiquetaElement = document.createElement('div');
-                etiquetaElement.className = 'etiqueta';
-                
-                const criadoEmFormatado = new Date(criadoEm).toLocaleString('pt-BR');
-                
-                etiquetaElement.innerHTML = `
-                    <div class="etiqueta-cor" style="background-color: ${corEtiqueta};"></div>
-                    <div class="etiqueta-info">
-                        <div class="etiqueta-nome">${nomeEtiqueta}</div>
-                        <div class="etiqueta-detalhes">
-                            <span class="etiqueta-id">ID: ${idEtiqueta}</span> | 
-                            Usuário: ${idUsuario} | 
-                            Criado em: ${criadoEmFormatado}
-                        </div>
-                    </div>
-                `;
-                
-                const listaEtiquetas = document.getElementById('lista-etiquetas');
-                
-                if (listaEtiquetas.querySelector('.empty-state')) {
-                    listaEtiquetas.innerHTML = '';
-                }
-                
-                listaEtiquetas.prepend(etiquetaElement);
-                
-                document.getElementById('form-etiqueta').reset();
-                
-                document.getElementById('cor_etiqueta').value = '#f8d7da';
-                document.getElementById('color-preview').style.backgroundColor = '#f8d7da';
-                
-                alert('Etiqueta cadastrada com sucesso!');
-            });
-            
-            document.getElementById('criado_em').valueAsDate = new Date();
-        });
-    </script>
-</body>
-</html>
+        
