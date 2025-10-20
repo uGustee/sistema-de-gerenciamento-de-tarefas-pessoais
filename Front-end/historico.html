@@ -11,6 +11,76 @@
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
         }
+
+        .navbar {
+            background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: #D94D73;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 15px 0;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        .navbar-item {
+            position: relative;
+        }
+
+        .navbar-link {
+            color: #D94D73;
+            text-decoration: none;
+            padding: 15px 12px;
+            display: block;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .navbar-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
+        }
+
+        .navbar-link.ativo {
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #B8375E;
+        }
+
+        .menu-hamburguer {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .menu-hamburguer span {
+            width: 25px;
+            height: 3px;
+            background-color: #D94D73;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
         
         body {
             background: #f8e1e7;
@@ -147,9 +217,87 @@
             background: #f5c6d6;
             margin: 0 auto 15px;
         }
+
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
+                flex-direction: column;
+                padding: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .navbar-menu.ativo {
+                display: flex;
+            }
+
+            .menu-hamburguer {
+                display: flex;
+            }
+
+            .navbar-item {
+                width: 100%;
+            }
+
+            .navbar-link {
+                padding: 12px 15px;
+                border-radius: 5px;
+                margin: 2px 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">Prio</a>
+            
+            <div class="menu-hamburguer">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="navbar-menu">
+                <li class="navbar-item">
+                    <a href="usuarios.html" class="navbar-link">Usuários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="metricas.html" class="navbar-link">Métricas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="lembretes.html" class="navbar-link">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link ativo">Projetos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <h1>📋 Histórico</h1>
@@ -191,7 +339,7 @@
                 </div>
             </div>
             
-            <!-- Ontem -->
+            
             <div class="day-group">
                 <div class="day-title">
                     📅 Ontem - 14 de Outubro
@@ -216,7 +364,7 @@
                 </div>
             </div>
             
-            <!-- 12 de Outubro -->
+         
             <div class="day-group">
                 <div class="day-title">
                     📅 12 de Outubro
@@ -241,4 +389,10 @@
                 </div>
             </div>
         </div>
-  
+        
+        <footer>
+            <p>© 2023 Prio - Todos os direitos reservados</p>
+        </footer>
+    </div>
+</body>
+</html>
