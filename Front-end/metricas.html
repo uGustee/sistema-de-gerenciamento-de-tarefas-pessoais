@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskBloom - Dashboard de Tarefas</title>
+    <title>HabitBloom - Acompanhamento de Hábitos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary-pastel: #f8d7da;
@@ -95,6 +94,10 @@
             margin: 3px 0;
             transition: 0.3s;
             border-radius: 2px;
+        }
+        
+        #menu-toggle {
+            display: none;
         }
         
         body {
@@ -281,6 +284,107 @@
             color: #dc3545;
         }
         
+        .habits-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .habits-container, .streak-container {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--primary-pastel);
+        }
+        
+        .habits-title, .streak-title {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .habits-list {
+            list-style: none;
+        }
+        
+        .habit-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--primary-pastel);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .habit-item:last-child {
+            border-bottom: none;
+        }
+        
+        .habit-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .habit-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .habit-frequency {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .habit-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-pastel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .habit-checkbox.checked {
+            background-color: var(--accent-pastel);
+            color: var(--white);
+        }
+        
+        .streak-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .streak-chart {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+        
+        .streak-bar {
+            width: 30px;
+            background: linear-gradient(to top, var(--primary-pastel), var(--accent-pastel));
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .streak-day {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
         .charts-section {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -306,6 +410,22 @@
         .chart {
             height: 300px;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-pastel);
+            border-radius: 8px;
+        }
+        
+        .chart-placeholder {
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        .chart-placeholder i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--accent-pastel);
         }
         
         .recent-activity {
@@ -378,7 +498,7 @@
                 z-index: 1000;
             }
 
-            .navbar-menu.ativo {
+            #menu-toggle:checked ~ .navbar-menu {
                 display: flex;
             }
 
@@ -396,7 +516,7 @@
                 margin: 2px 0;
             }
 
-            .charts-section {
+            .charts-section, .habits-section {
                 grid-template-columns: 1fr;
             }
             
@@ -422,11 +542,12 @@
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
             
-            <div class="menu-hamburguer" id="menuHamburguer">
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </label>
             
             <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
@@ -442,13 +563,13 @@
                     <a href="notificacoes.html" class="navbar-link">Notificações</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link ativo">projetos</a>
+                    <a href="metricas.html" class="navbar-link">Métricas</a>
                 </li>
                 <li class="navbar-item">
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                    <a href="projetos.html" class="navbar-link ativo">projetos</a>
                 </li>
                 <li class="navbar-item">
                     <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
@@ -463,8 +584,8 @@
     <div class="container">
         <header>
             <div class="logo">
-                <i class="fas fa-blossom"></i>
-                <span>TaskBloom</span>
+                <i class="fas fa-seedling"></i>
+                <span>HabitBloom</span>
             </div>
             <div class="user-info">
                 <span>Olá, Maria Silva</span>
@@ -472,7 +593,7 @@
             </div>
         </header>
         
-        <h1 class="dashboard-title">Dashboard de Métricas</h1>
+        <h1 class="dashboard-title">Dashboard de Hábitos</h1>
         
         <div class="filter-section">
             <div class="filter-group">
@@ -502,29 +623,15 @@
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-header">
-                    <div class="metric-title">Tarefas Criadas</div>
+                    <div class="metric-title">Hábitos Ativos</div>
                     <div class="metric-icon">
-                        <i class="fas fa-plus-circle"></i>
+                        <i class="fas fa-list-check"></i>
                     </div>
                 </div>
-                <div class="metric-value">42</div>
+                <div class="metric-value">12</div>
                 <div class="metric-change positive">
                     <i class="fas fa-arrow-up"></i>
-                    <span>12% em relação à semana anterior</span>
-                </div>
-            </div>
-            
-            <div class="metric-card">
-                <div class="metric-header">
-                    <div class="metric-title">Tarefas Concluídas</div>
-                    <div class="metric-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                <div class="metric-value">38</div>
-                <div class="metric-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>8% em relação à semana anterior</span>
+                    <span>Adicionou 2 novos hábitos</span>
                 </div>
             </div>
             
@@ -535,40 +642,140 @@
                         <i class="fas fa-chart-pie"></i>
                     </div>
                 </div>
-                <div class="metric-value">90.5%</div>
-                <div class="metric-change negative">
-                    <i class="fas fa-arrow-down"></i>
-                    <span>2% em relação à semana anterior</span>
+                <div class="metric-value">78%</div>
+                <div class="metric-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>5% maior que na semana passada</span>
                 </div>
             </div>
             
             <div class="metric-card">
                 <div class="metric-header">
-                    <div class="metric-title">Tempo Focado</div>
+                    <div class="metric-title">Sequência Atual</div>
                     <div class="metric-icon">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-fire"></i>
                     </div>
                 </div>
-                <div class="metric-value">15h 32m</div>
+                <div class="metric-value">16 dias</div>
                 <div class="metric-change positive">
                     <i class="fas fa-arrow-up"></i>
-                    <span>25% em relação à semana anterior</span>
+                    <span>Maior sequência: 24 dias</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-title">Hábitos Concluídos Hoje</div>
+                    <div class="metric-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="metric-value">5/8</div>
+                <div class="metric-change negative">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>2 hábitos pendentes</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="habits-section">
+            <div class="habits-container">
+                <h3 class="habits-title">Meus Hábitos de Hoje</h3>
+                <ul class="habits-list">
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Meditação Matinal</div>
+                            <div class="habit-frequency">Diário • 10 min</div>
+                        </div>
+                        <div class="habit-checkbox checked">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Exercício Físico</div>
+                            <div class="habit-frequency">Seg, Qua, Sex • 30 min</div>
+                        </div>
+                        <div class="habit-checkbox">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Leitura</div>
+                            <div class="habit-frequency">Diário • 20 min</div>
+                        </div>
+                        <div class="habit-checkbox checked">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Beber Água</div>
+                            <div class="habit-frequency">Diário • 2L</div>
+                        </div>
+                        <div class="habit-checkbox checked">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                    <li class="habit-item">
+                        <div class="habit-info">
+                            <div class="habit-name">Estudar Inglês</div>
+                            <div class="habit-frequency">Ter, Qui, Sáb • 25 min</div>
+                        </div>
+                        <div class="habit-checkbox">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="streak-container">
+                <h3 class="streak-title">Sequência de Hábitos</h3>
+                <div class="streak-chart">
+                    <div class="streak-bar" style="height: 80%;">
+                        <div class="streak-day">Seg</div>
+                    </div>
+                    <div class="streak-bar" style="height: 90%;">
+                        <div class="streak-day">Ter</div>
+                    </div>
+                    <div class="streak-bar" style="height: 70%;">
+                        <div class="streak-day">Qua</div>
+                    </div>
+                    <div class="streak-bar" style="height: 95%;">
+                        <div class="streak-day">Qui</div>
+                    </div>
+                    <div class="streak-bar" style="height: 85%;">
+                        <div class="streak-day">Sex</div>
+                    </div>
+                    <div class="streak-bar" style="height: 60%;">
+                        <div class="streak-day">Sáb</div>
+                    </div>
+                    <div class="streak-bar" style="height: 75%;">
+                        <div class="streak-day">Dom</div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="charts-section">
             <div class="chart-container">
-                <h3 class="chart-title">Tarefas Criadas vs Concluídas (Últimos 7 dias)</h3>
+                <h3 class="chart-title">Progresso de Hábitos (Últimos 7 dias)</h3>
                 <div class="chart">
-                    <canvas id="tasksChart"></canvas>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Geração de gráficos desativada</p>
+                    </div>
                 </div>
             </div>
             
             <div class="chart-container">
-                <h3 class="chart-title">Distribuição de Tarefas por Categoria</h3>
+                <h3 class="chart-title">Distribuição por Frequência</h3>
                 <div class="chart">
-                    <canvas id="categoryChart"></canvas>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>Geração de gráficos desativada</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -580,146 +787,39 @@
                     <div class="activity-icon">
                         <i class="fas fa-check"></i>
                     </div>
-                    <div class="activity-time">10:30</div>
-                    <div class="activity-text">Você concluiu a tarefa "Revisar relatório trimestral"</div>
+                    <div class="activity-time">08:30</div>
+                    <div class="activity-text">Você completou o hábito "Meditação Matinal"</div>
                 </li>
                 <li class="activity-item">
                     <div class="activity-icon">
                         <i class="fas fa-plus"></i>
                     </div>
-                    <div class="activity-time">09:15</div>
-                    <div class="activity-text">Você criou a tarefa "Preparar apresentação para reunião"</div>
+                    <div class="activity-time">Ontem</div>
+                    <div class="activity-text">Você adicionou o hábito "Beber 2L de água por dia"</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="activity-time">Ontem</div>
+                    <div class="activity-text">Você atingiu 16 dias de sequência em "Leitura Diária"</div>
                 </li>
                 <li class="activity-item">
                     <div class="activity-icon">
                         <i class="fas fa-trophy"></i>
                     </div>
-                    <div class="activity-time">Ontem</div>
-                    <div class="activity-text">Você atingiu 5 horas de tempo focado pela primeira vez</div>
+                    <div class="activity-time">3 dias atrás</div>
+                    <div class="activity-text">Você completou todos os hábitos do dia pela 5ª vez esta semana</div>
                 </li>
                 <li class="activity-item">
                     <div class="activity-icon">
-                        <i class="fas fa-calendar-check"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="activity-time">Ontem</div>
-                    <div class="activity-text">Você concluiu todas as tarefas do dia</div>
-                </li>
-                <li class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <div class="activity-time">2 dias atrás</div>
-                    <div class="activity-text">Você criou 8 novas tarefas</div>
+                    <div class="activity-time">5 dias atrás</div>
+                    <div class="activity-text">Sua taxa de conclusão aumentou 12% esta semana</div>
                 </li>
             </ul>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuHamburguer = document.getElementById('menuHamburguer');
-            const navbarMenu = document.getElementById('navbarMenu');
-            
-            menuHamburguer.addEventListener('click', function() {
-                navbarMenu.classList.toggle('ativo');
-            });
-            
-            const navbarLinks = document.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navbarMenu.classList.remove('ativo');
-                    }
-                });
-            });
-            
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navbarLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
-                    link.classList.add('ativo');
-                }
-            });
-
-            const today = new Date();
-            const oneWeekAgo = new Date();
-            oneWeekAgo.setDate(today.getDate() - 7);
-            
-            document.getElementById('start-date').valueAsDate = oneWeekAgo;
-            document.getElementById('end-date').valueAsDate = today;
-            
-            const tasksCtx = document.getElementById('tasksChart').getContext('2d');
-            const tasksChart = new Chart(tasksCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    datasets: [
-                        {
-                            label: 'Tarefas Criadas',
-                            data: [8, 5, 7, 9, 6, 4, 3],
-                            borderColor: '#f1b0b7',
-                            backgroundColor: 'rgba(241, 176, 183, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        },
-                        {
-                            label: 'Tarefas Concluídas',
-                            data: [6, 4, 8, 7, 5, 5, 3],
-                            borderColor: '#e6a4ad',
-                            backgroundColor: 'rgba(230, 164, 173, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-            
-            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-            const categoryChart = new Chart(categoryCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Trabalho', 'Pessoal', 'Estudos', 'Saúde', 'Outros'],
-                    datasets: [{
-                        data: [35, 25, 20, 10, 10],
-                        backgroundColor: [
-                            '#f8d7da',
-                            '#f5c6cb',
-                            '#f1b0b7',
-                            '#e6a4ad',
-                            '#fce4ec'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-            
-            document.getElementById('apply-filters').addEventListener('click', function() {
-                alert('Filtros aplicados! Em um sistema real, isso atualizaria os dados do dashboard.');
-            });
-        });
-    </script>
 </body>
 </html>
