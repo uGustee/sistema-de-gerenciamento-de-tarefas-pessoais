@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HabitBloom - Acompanhamento de Hábitos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary-pastel: #f8d7da;
@@ -95,6 +94,10 @@
             margin: 3px 0;
             transition: 0.3s;
             border-radius: 2px;
+        }
+        
+        #menu-toggle {
+            display: none;
         }
         
         body {
@@ -407,6 +410,22 @@
         .chart {
             height: 300px;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-pastel);
+            border-radius: 8px;
+        }
+        
+        .chart-placeholder {
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        .chart-placeholder i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--accent-pastel);
         }
         
         .recent-activity {
@@ -479,7 +498,7 @@
                 z-index: 1000;
             }
 
-            .navbar-menu.ativo {
+            #menu-toggle:checked ~ .navbar-menu {
                 display: flex;
             }
 
@@ -523,11 +542,12 @@
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
             
-            <div class="menu-hamburguer" id="menuHamburguer">
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </label>
             
             <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
@@ -742,14 +762,20 @@
             <div class="chart-container">
                 <h3 class="chart-title">Progresso de Hábitos (Últimos 7 dias)</h3>
                 <div class="chart">
-                    <canvas id="habitsChart"></canvas>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Geração de gráficos desativada</p>
+                    </div>
                 </div>
             </div>
             
             <div class="chart-container">
                 <h3 class="chart-title">Distribuição por Frequência</h3>
                 <div class="chart">
-                    <canvas id="frequencyChart"></canvas>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>Geração de gráficos desativada</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -795,125 +821,5 @@
             </ul>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuHamburguer = document.getElementById('menuHamburguer');
-            const navbarMenu = document.getElementById('navbarMenu');
-            
-            menuHamburguer.addEventListener('click', function() {
-                navbarMenu.classList.toggle('ativo');
-            });
-            
-            const navbarLinks = document.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navbarMenu.classList.remove('ativo');
-                    }
-                });
-            });
-            
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navbarLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
-                    link.classList.add('ativo');
-                }
-            });
-
-            const today = new Date();
-            const oneWeekAgo = new Date();
-            oneWeekAgo.setDate(today.getDate() - 7);
-            
-            document.getElementById('start-date').valueAsDate = oneWeekAgo;
-            document.getElementById('end-date').valueAsDate = today;
-            
-            const habitsCtx = document.getElementById('habitsChart').getContext('2d');
-            const habitsChart = new Chart(habitsCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Meditação', 'Exercício', 'Leitura', 'Água', 'Inglês', 'Organização', 'Alimentação'],
-                    datasets: [{
-                        label: 'Taxa de Conclusão (%)',
-                        data: [85, 70, 90, 95, 65, 80, 75],
-                        backgroundColor: [
-                            '#f8d7da',
-                            '#f5c6cb',
-                            '#f1b0b7',
-                            '#e6a4ad',
-                            '#fce4ec',
-                            '#f8d7da',
-                            '#f5c6cb'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            
-            const frequencyCtx = document.getElementById('frequencyChart').getContext('2d');
-            const frequencyChart = new Chart(frequencyCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Diário', '3x/Semana', '2x/Semana', 'Semanal', 'Personalizado'],
-                    datasets: [{
-                        data: [5, 3, 2, 1, 1],
-                        backgroundColor: [
-                            '#f8d7da',
-                            '#f5c6cb',
-                            '#f1b0b7',
-                            '#e6a4ad',
-                            '#fce4ec'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-            
-            document.querySelectorAll('.habit-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('click', function() {
-                    this.classList.toggle('checked');
-                    
-                    const checkedCount = document.querySelectorAll('.habit-checkbox.checked').length;
-                    const totalCount = document.querySelectorAll('.habit-checkbox').length;
-                    document.querySelector('.metric-card:nth-child(4) .metric-value').textContent = 
-                        `${checkedCount}/${totalCount}`;
-                });
-            });
-            
-            document.getElementById('apply-filters').addEventListener('click', function() {
-                alert('Filtros aplicados! Em um sistema real, isso atualizaria os dados do dashboard.');
-            });
-        });
-    </script>
 </body>
 </html>
