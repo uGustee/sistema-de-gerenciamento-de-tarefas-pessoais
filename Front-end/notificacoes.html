@@ -90,6 +90,10 @@
             border-radius: 2px;
         }
         
+        #menu-toggle {
+            display: none;
+        }
+        
         body {
             background-color: var(--cinza-claro);
             color: var(--cinza-escuro);
@@ -235,7 +239,7 @@
                 z-index: 1000;
             }
 
-            .navbar-menu.ativo {
+            #menu-toggle:checked ~ .navbar-menu {
                 display: flex;
             }
 
@@ -269,11 +273,12 @@
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
             
-            <div class="menu-hamburguer" id="menuHamburguer">
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </label>
             
             <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
@@ -315,30 +320,30 @@
         
         <div class="form-container">
             <h2>Cadastro de Notificação</h2>
-            <form id="form-notificacao">
+            <form id="form-notificacao" method="GET" action="#">
                 <div class="form-group">
                     <label for="id_notificacao">ID da notificação:</label>
-                    <input type="text" id="id_notificacao" required>
+                    <input type="text" id="id_notificacao" name="id_notificacao" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="id_usuario">ID do usuário:</label>
-                    <input type="text" id="id_usuario" required>
+                    <input type="text" id="id_usuario" name="id_usuario" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="titulo">Título:</label>
-                    <input type="text" id="titulo" required>
+                    <input type="text" id="titulo" name="titulo" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="mensagem">Mensagem:</label>
-                    <textarea id="mensagem" required></textarea>
+                    <textarea id="mensagem" name="mensagem" required></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="tipo">Tipo:</label>
-                    <select id="tipo" required>
+                    <select id="tipo" name="tipo" required>
                         <option value="">Selecione um tipo</option>
                         <option value="info">Informação</option>
                         <option value="alerta">Alerta</option>
@@ -349,17 +354,17 @@
                 
                 <div class="form-group">
                     <label for="data_envio">Data de envio:</label>
-                    <input type="date" id="data_envio" required>
+                    <input type="date" id="data_envio" name="data_envio" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="link">Link:</label>
-                    <input type="url" id="link" placeholder="https://exemplo.com">
+                    <input type="url" id="link" name="link" placeholder="https://exemplo.com">
                 </div>
                 
                 <div class="form-group">
                     <label for="criado_em">Criado em:</label>
-                    <input type="datetime-local" id="criado_em" required>
+                    <input type="datetime-local" id="criado_em" name="criado_em" required>
                 </div>
                 
                 <button type="submit">Cadastrar Notificação</button>
@@ -369,87 +374,32 @@
         <div class="notificacoes-container">
             <h2>Notificações Cadastradas</h2>
             <div id="lista-notificacoes">
-                <div class="empty-state">
-                    <p>Nenhuma notificação cadastrada ainda.</p>
-                    <p>Preencha o formulário acima para adicionar a primeira notificação.</p>
+                <div class="notificacao">
+                    <div class="notificacao-header">
+                        <div class="notificacao-titulo">Bem-vindo ao Sistema</div>
+                        <div class="notificacao-tipo">info</div>
+                    </div>
+                    <div class="notificacao-mensagem">Seja bem-vindo ao nosso sistema de notificações. Aqui você pode gerenciar todas as suas notificações de forma simples e eficiente.</div>
+                    <div class="notificacao-footer">
+                        <div>ID: NOT001 | Usuário: USU001</div>
+                        <div>Envio: 01/11/2023 | Criado: 01/11/2023 10:00:00</div>
+                    </div>
+                </div>
+                
+                <div class="notificacao">
+                    <div class="notificacao-header">
+                        <div class="notificacao-titulo">Atualização do Sistema</div>
+                        <div class="notificacao-tipo">alerta</div>
+                    </div>
+                    <div class="notificacao-mensagem">Uma nova atualização do sistema estará disponível na próxima semana. Fique atento às novidades!</div>
+                    <div class="notificacao-footer">
+                        <div>ID: NOT002 | Usuário: USU001</div>
+                        <div>Envio: 02/11/2023 | Criado: 02/11/2023 14:30:00</div>
+                    </div>
+                    <div><a href="https://exemplo.com/atualizacao" class="notificacao-link" target="_blank">https://exemplo.com/atualizacao</a></div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuHamburguer = document.getElementById('menuHamburguer');
-            const navbarMenu = document.getElementById('navbarMenu');
-            
-            menuHamburguer.addEventListener('click', function() {
-                navbarMenu.classList.toggle('ativo');
-            });
-            
-            const navbarLinks = document.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navbarMenu.classList.remove('ativo');
-                    }
-                });
-            });
-            
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navbarLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
-                    link.classList.add('ativo');
-                }
-            });
-
-            document.getElementById('form-notificacao').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const idNotificacao = document.getElementById('id_notificacao').value;
-                const idUsuario = document.getElementById('id_usuario').value;
-                const titulo = document.getElementById('titulo').value;
-                const mensagem = document.getElementById('mensagem').value;
-                const tipo = document.getElementById('tipo').value;
-                const dataEnvio = document.getElementById('data_envio').value;
-                const link = document.getElementById('link').value;
-                const criadoEm = document.getElementById('criado_em').value;
-            
-                const notificacaoElement = document.createElement('div');
-                notificacaoElement.className = 'notificacao';
-                
-                const dataFormatada = new Date(dataEnvio).toLocaleDateString('pt-BR');
-                const criadoEmFormatado = new Date(criadoEm).toLocaleString('pt-BR');
-                
-                notificacaoElement.innerHTML = `
-                    <div class="notificacao-header">
-                        <div class="notificacao-titulo">${titulo}</div>
-                        <div class="notificacao-tipo">${tipo}</div>
-                    </div>
-                    <div class="notificacao-mensagem">${mensagem}</div>
-                    <div class="notificacao-footer">
-                        <div>ID: ${idNotificacao} | Usuário: ${idUsuario}</div>
-                        <div>Envio: ${dataFormatada} | Criado: ${criadoEmFormatado}</div>
-                    </div>
-                    ${link ? `<div><a href="${link}" class="notificacao-link" target="_blank">${link}</a></div>` : ''}
-                `;
-                
-                const listaNotificacoes = document.getElementById('lista-notificacoes');
-                
-                if (listaNotificacoes.querySelector('.empty-state')) {
-                    listaNotificacoes.innerHTML = '';
-                }
-                
-                listaNotificacoes.prepend(notificacaoElement);
-                
-                document.getElementById('form-notificacao').reset();
-                
-                alert('Notificação cadastrada com sucesso!');
-            });
-            
-            document.getElementById('data_envio').valueAsDate = new Date();
-            document.getElementById('criado_em').valueAsDate = new Date();
-        });
-    </script>
 </body>
 </html>
