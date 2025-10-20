@@ -113,6 +113,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
         }
 
         .btn:hover {
@@ -183,7 +185,7 @@
                 <p>Crie sua conta</p>
             </div>
             
-            <form id="registerForm">
+            <form id="registerForm" action="projetos.html" method="GET">
                 <div class="form-group">
                     <label for="nome">Nome completo</label>
                     <input type="text" id="nome" name="nome" required>
@@ -212,8 +214,7 @@
                     </div>
                 </div>
                 
-            <a href="projetos.html" class="btn">Cadastrar</a>
-
+                <button type="submit" class="btn">Cadastrar</button>
                 
                 <div class="login-link">
                     Já tem uma conta? <a href="#">Faça login</a>
@@ -221,36 +222,5 @@
             </form>
         </div>
     </div>
-
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const senha = document.getElementById('senha').value;
-            const confirmarSenha = document.getElementById('confirmarSenha').value;
-            
-            if (senha !== confirmarSenha) {
-                alert('As senhas não coincidem!');
-                return;
-            }
-            
-            // Aqui você normalmente enviaria os dados para o servidor
-            alert('Cadastro realizado com sucesso!');
-            // Redirecionar para a página de login ou dashboard
-        });
-
-        // Preview da imagem de perfil
-        document.getElementById('foto').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.querySelector('.profile-preview');
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview da foto">`;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
 </body>
 </html>
