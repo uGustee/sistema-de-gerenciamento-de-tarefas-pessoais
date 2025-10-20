@@ -82,6 +82,10 @@
             border-radius: 2px;
         }
 
+        #menu-toggle {
+            display: none;
+        }
+
         body {
             background-color: #f9f4f5;
             color: #333;
@@ -232,6 +236,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
         }
 
         .btn-primary {
@@ -324,7 +330,7 @@
                 z-index: 1000;
             }
 
-            .navbar-menu.ativo {
+            #menu-toggle:checked ~ .navbar-menu {
                 display: flex;
             }
 
@@ -361,11 +367,12 @@
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
             
-            <div class="menu-hamburguer" id="menuHamburguer">
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </label>
             
             <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
@@ -421,7 +428,7 @@
                 </div>
             </div>
             
-            <form class="preferences-form" id="preferencesForm">
+            <form class="preferences-form" id="preferencesForm" method="GET" action="#">
                 <div class="form-section">
                     <h3>Preferências de Tema</h3>
                     <div class="form-group">
@@ -477,61 +484,11 @@
                 </div>
                 
                 <div class="btn-container">
-                    <button type="button" class="btn btn-secondary">Voltar</button>
+                    <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
                     <button type="submit" class="btn btn-primary">Salvar Preferências</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuHamburguer = document.getElementById('menuHamburguer');
-            const navbarMenu = document.getElementById('navbarMenu');
-            
-            menuHamburguer.addEventListener('click', function() {
-                navbarMenu.classList.toggle('ativo');
-            });
-            
-            const navbarLinks = document.querySelectorAll('.navbar-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        navbarMenu.classList.remove('ativo');
-                    }
-                });
-            });
-            
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            navbarLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (currentPage === linkPage || (currentPage === '' && linkPage === 'index.html')) {
-                    link.classList.add('ativo');
-                }
-            });
-
-            document.getElementById('preferencesForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const tema = document.querySelector('input[name="tema"]:checked').value;
-                const notEmail = document.getElementById('not-email').checked;
-                const notPush = document.getElementById('not-push').checked;
-                const lembretePadrao = document.getElementById('lembrete-padrao').value;
-                
-                console.log({
-                    tema,
-                    notEmail,
-                    notPush,
-                    lembretePadrao
-                });
-                
-                alert('Preferências salvas com sucesso!');
-            });
-
-            document.querySelector('.btn-secondary').addEventListener('click', function() {
-                window.history.back();
-            });
-        });
-    </script>
 </body>
 </html>
