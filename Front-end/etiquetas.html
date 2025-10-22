@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <title>Tarefas com Etiquetas</title>
     <style>
         :root {
-            --rosa-pastel: #f8d7da;
-            --rosa-pastel-escuro: #f1b0b7;
-            --rosa-medio: #e8a2b5;
-            --rosa-escuro: #d87a94;
-            --branco: #ffffff;
-            --cinza-claro: #f8f9fa;
-            --cinza-escuro: #343a40;
-            --verde: #a8d5ba;
-            --azul: #aed6f1;
-            --amarelo: #f9e79f;
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -75,14 +76,13 @@
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
             color: #B8375E;
         }
         
         body {
             background-color: var(--cinza-claro);
             color: var(--cinza-escuro);
-            padding: 20px;
         }
         
         .container {
@@ -343,22 +343,6 @@
                 display: flex;
             }
 
-            .menu-hamburguer {
-                display: flex;
-                flex-direction: column;
-                cursor: pointer;
-                padding: 10px;
-            }
-
-            .menu-hamburguer span {
-                width: 25px;
-                height: 3px;
-                background-color: #D94D73;
-                margin: 3px 0;
-                transition: 0.3s;
-                border-radius: 2px;
-            }
-
             .navbar-item {
                 width: 100%;
             }
@@ -375,18 +359,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-            
             <ul class="navbar-menu" id="navbarMenu">
-                <li class="navbar-item">
-                    <a href="usuarios.html" class="navbar-link">Usuários</a>
-                </li>
                 <li class="navbar-item">
                     <a href="tarefas.html" class="navbar-link">Tarefas</a>
                 </li>
@@ -403,10 +376,13 @@
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link ativo">projetos</a>
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="habitos.html" class="navbar-link">Habitos</a>
+                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link ativo">Etiquetas</a>
                 </li>
                 <li class="navbar-item">
                     <a href="comentarios.html" class="navbar-link">Comentários</a>

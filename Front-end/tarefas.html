@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <title>Lista de Tarefas </title>
     <style>
+        :root {
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,19 +26,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body {
-            background-color: #FFF5F7;
-            color: #555;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
         .navbar {
             background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
             padding: 0 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            border-radius: 10px;
         }
 
         .navbar-container {
@@ -70,8 +76,14 @@
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
             color: #B8375E;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         .container {
@@ -182,12 +194,9 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            <ul class="navbar-menu">
+            <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
-                    <a href="usuarios.html" class="navbar-link">Usuários</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link">Projetos</a>
+                    <a href="tarefas.html" class="navbar-link ativo">Tarefas</a>
                 </li>
                 <li class="navbar-item">
                     <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
@@ -202,6 +211,9 @@
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
                 </li>
                 <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
+                </li>
+                <li class="navbar-item">
                     <a href="habitos.html" class="navbar-link">Hábitos</a>
                 </li>
                 <li class="navbar-item">
@@ -210,8 +222,8 @@
                 <li class="navbar-item">
                     <a href="comentarios.html" class="navbar-link">Comentários</a>
                 </li>
-                     <li class="navbar-item">
-                    <a href="historico.html" class="navbar-link">historico</a>
+                <li class="navbar-item">
+                    <a href="historico.html" class="navbar-link">Historico</a>
                 </li>
             </ul>
         </div>
@@ -239,10 +251,6 @@
                 </div>
             </div>
         </div>
-        
-        <footer class="rodape">
-            <p>© 2025 Prio</p>
-        </footer>
     </div>
 </body>
 </html>

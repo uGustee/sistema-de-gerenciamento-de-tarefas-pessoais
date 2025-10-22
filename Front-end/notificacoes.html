@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <title>Sistema de Notificações</title>
     <style>
         :root {
-            --rosa-pastel: #f8d7da;
-            --rosa-pastel-escuro: #f1b0b7;
-            --branco: #ffffff;
-            --cinza-claro: #f8f9fa;
-            --cinza-escuro: #343a40;
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -70,34 +76,14 @@
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
             color: #B8375E;
         }
 
-        .menu-hamburguer {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .menu-hamburguer span {
-            width: 25px;
-            height: 3px;
-            background-color: #D94D73;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-        
-        #menu-toggle {
-            display: none;
-        }
-        
         body {
-            background-color: var(--cinza-claro);
-            color: var(--cinza-escuro);
-            padding: 20px;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
         
         .container {
@@ -243,10 +229,6 @@
                 display: flex;
             }
 
-            .menu-hamburguer {
-                display: flex;
-            }
-
             .navbar-item {
                 width: 100%;
             }
@@ -272,23 +254,12 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-            
             <ul class="navbar-menu" id="navbarMenu">
-                <li class="navbar-item">
-                    <a href="usuarios.html" class="navbar-link">Usuários</a>
-                </li>
                 <li class="navbar-item">
                     <a href="tarefas.html" class="navbar-link">Tarefas</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link">projetos</a>
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
                 </li>
                 <li class="navbar-item">
                     <a href="notificacoes.html" class="navbar-link ativo">Notificações</a>
@@ -298,6 +269,9 @@
                 </li>
                 <li class="navbar-item">
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
                 </li>
                 <li class="navbar-item">
                     <a href="habitos.html" class="navbar-link">Hábitos</a>

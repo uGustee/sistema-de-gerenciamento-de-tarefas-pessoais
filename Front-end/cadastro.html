@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow - Cadastro</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <title>Cadastro</title>
     <style>
         * {
             margin: 0;
@@ -121,6 +122,11 @@
             background-color: #ff1493;
         }
 
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
         .login-link {
             text-align: center;
             margin-top: 20px;
@@ -137,28 +143,24 @@
             text-decoration: underline;
         }
 
-        .profile-preview {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            margin: 10px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border: 2px dashed #ffb6c1;
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
         }
 
-        .profile-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
-        .profile-preview span {
-            color: #999;
-            font-size: 0.8rem;
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
         @media (max-width: 768px) {
@@ -176,16 +178,18 @@
     <div class="container">
         <div class="left-panel">
             <h1>Organize sua vida</h1>
-            <p>Com o TaskFlow, você pode gerenciar suas tarefas diárias de forma simples e eficiente. Cadastre-se agora e comece a organizar sua rotina!</p>
+            <p>Com o Prio, você pode gerenciar suas tarefas diárias de forma simples e eficiente. Cadastre-se agora e comece a organizar sua rotina!</p>
         </div>
         
         <div class="right-panel">
             <div class="logo">
-                <h2>TaskFlow</h2>
+                <h2>Prio</h2>
                 <p>Crie sua conta</p>
             </div>
+
+            <div id="alertMessage" class="alert"></div>
             
-            <form id="registerForm" action="projetos.html" method="GET">
+            <form id="registerForm">
                 <div class="form-group">
                     <label for="nome">Nome completo</label>
                     <input type="text" id="nome" name="nome" required>
@@ -198,7 +202,7 @@
                 
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" required>
+                    <input type="password" id="senha" name="senha" required minlength="6">
                 </div>
                 
                 <div class="form-group">
@@ -206,21 +210,88 @@
                     <input type="password" id="confirmarSenha" name="confirmarSenha" required>
                 </div>
                 
-                <div class="form-group">
-                    <label for="foto">Foto de perfil (opcional)</label>
-                    <input type="file" id="foto" name="foto" accept="image/*">
-                    <div class="profile-preview">
-                        <span>Prévia</span>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn">Cadastrar</button>
+                <button type="submit" class="btn" id="submitBtn">Cadastrar</button>
                 
                 <div class="login-link">
-                    Já tem uma conta? <a href="#">Faça login</a>
+                    Já tem uma conta? <a href="login.html">Faça login</a>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const alertDiv = document.getElementById('alertMessage');
+            
+            // Obter dados do formulário
+            const formData = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                senha: document.getElementById('senha').value,
+                confirmarSenha: document.getElementById('confirmarSenha').value
+            };
+            
+            // Validar senhas
+            if (formData.senha !== formData.confirmarSenha) {
+                showAlert('As senhas não coincidem!', 'error');
+                return;
+            }
+            
+            if (formData.senha.length < 6) {
+                showAlert('A senha deve ter pelo menos 6 caracteres!', 'error');
+                return;
+            }
+            
+            // Desabilitar botão durante o processamento
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Cadastrando...';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/cadastrar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Cadastro realizado com sucesso! Redirecionando...', 'success');
+                    // Redirecionar após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'projetos.html';
+                    }, 2000);
+                } else {
+                    showAlert(result.message, 'error');
+                }
+                
+            } catch (error) {
+                showAlert('Erro de conexão. Tente novamente.', 'error');
+                console.error('Erro:', error);
+            } finally {
+                // Reabilitar botão
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Cadastrar';
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alertMessage');
+            alertDiv.textContent = message;
+            alertDiv.className = 'alert';
+            alertDiv.classList.add(type === 'success' ? 'alert-success' : 'alert-error');
+            alertDiv.style.display = 'block';
+            
+            // Auto-esconder após 5 segundos
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
 </body>
 </html>

@@ -3,26 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prio - Métricas</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <title>Métricas</title>
     <style>
+        :root {
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f9f4f5;
-            color: #333;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .navbar {
             background: linear-gradient(135deg, #FFD6E0, #FFB6C1);
-            padding: 15px 20px;
-            border-radius: 10px;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,31 +43,47 @@
 
         .navbar-logo {
             color: #D94D73;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: bold;
             text-decoration: none;
+            padding: 15px 0;
         }
 
         .navbar-menu {
             display: flex;
             list-style: none;
-            gap: 10px;
+            gap: 5px;
+        }
+
+        .navbar-item {
+            position: relative;
         }
 
         .navbar-link {
             color: #D94D73;
             text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 5px;
+            padding: 15px 12px;
+            display: block;
             font-weight: 500;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .navbar-link:hover {
             background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #B8375E;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         .container {
@@ -264,17 +293,44 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <a href="index.html" class="navbar-logo">Prio</a>
-            <ul class="navbar-menu">
-                <li><a href="tarefas.html" class="navbar-link">Tarefas</a></li>
-                <li><a href="habitos.html" class="navbar-link">Hábitos</a></li>
-                <li><a href="metricas.html" class="navbar-link ativo">Métricas</a></li>
-                <li><a href="historico.html" class="navbar-link">Histórico</a></li>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-logo">Prio</a>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li class="navbar-item">
+                    <a href="tarefas.html" class="navbar-link">Tarefas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="preferencias_usuarios.html" class="navbar-link">Preferências</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="notificacoes.html" class="navbar-link">Notificações</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="metricas.html" class="navbar-link ativo">Métricas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="lembretes.html" class="navbar-link">Lembretes</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link">Hábitos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="comentarios.html" class="navbar-link">Comentários</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="historico.html" class="navbar-link">Historico</a>
+                </li>
             </ul>
-        </nav>
-
+        </div>
+    </nav>
+    <div class="container">
         <div class="header">
             <h1>📊 Métricas de Produtividade</h1>
             <p>Acompanhe seu desempenho e progresso</p>

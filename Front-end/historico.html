@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <title>Histórico de Atividades</title>
     <style>
+        :root {
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .navbar {
@@ -62,30 +76,14 @@
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
             color: #B8375E;
         }
 
-        .menu-hamburguer {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .menu-hamburguer span {
-            width: 25px;
-            height: 3px;
-            background-color: #D94D73;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-        
         body {
-            background: #f8e1e7;
-            min-height: 100vh;
-            padding: 20px;
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
         
         .container {
@@ -256,17 +254,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            
-            <div class="menu-hamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="navbar-menu">
-                <li class="navbar-item">
-                    <a href="usuarios.html" class="navbar-link">Usuários</a>
-                </li>
+            <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
                     <a href="tarefas.html" class="navbar-link">Tarefas</a>
                 </li>
@@ -283,6 +271,9 @@
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
                 </li>
                 <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
+                </li>
+                <li class="navbar-item">
                     <a href="habitos.html" class="navbar-link">Hábitos</a>
                 </li>
                 <li class="navbar-item">
@@ -292,7 +283,7 @@
                     <a href="comentarios.html" class="navbar-link">Comentários</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link ativo">Projetos</a>
+                    <a href="historico.html" class="navbar-link ativo">Historico</a>
                 </li>
             </ul>
         </div>

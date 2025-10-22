@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabitBloom - Acompanhamento de Hábitos</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <title>Acompanhamento de Hábitos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -76,28 +77,8 @@
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
             color: #B8375E;
-        }
-
-        .menu-hamburguer {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .menu-hamburguer span {
-            width: 25px;
-            height: 3px;
-            background-color: #D94D73;
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-        
-        #menu-toggle {
-            display: none;
         }
         
         body {
@@ -110,47 +91,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-        }
-        
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--primary-pastel);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-        
-        .logo i {
-            color: var(--accent-pastel);
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-pastel), var(--accent-pastel));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: bold;
-            box-shadow: var(--shadow);
         }
         
         .dashboard-title {
@@ -502,10 +442,6 @@
                 display: flex;
             }
 
-            .menu-hamburguer {
-                display: flex;
-            }
-
             .navbar-item {
                 width: 100%;
             }
@@ -541,18 +477,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            
-            <input type="checkbox" id="menu-toggle">
-            <label for="menu-toggle" class="menu-hamburguer" id="menuHamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
-            
             <ul class="navbar-menu" id="navbarMenu">
-                <li class="navbar-item">
-                    <a href="usuarios.html" class="navbar-link">Usuários</a>
-                </li>
                 <li class="navbar-item">
                     <a href="tarefas.html" class="navbar-link">Tarefas</a>
                 </li>
@@ -569,7 +494,10 @@
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link ativo">projetos</a>
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
+                </li>
+                <li class="navbar-item">
+                    <a href="habitos.html" class="navbar-link ativo">Hábitos</a>
                 </li>
                 <li class="navbar-item">
                     <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
@@ -585,17 +513,6 @@
     </nav>
     
     <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <span>HabitBloom</span>
-            </div>
-            <div class="user-info">
-                <span>Olá, Maria Silva</span>
-                <div class="user-avatar">MS</div>
-            </div>
-        </header>
-        
         <h1 class="dashboard-title">Dashboard de Hábitos</h1>
         
         <div class="filter-section">

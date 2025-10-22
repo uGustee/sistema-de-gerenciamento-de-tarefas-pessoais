@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <title>Sistema de Comentários</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-pastel: #f8d7da;
+            --secondary-pastel: #f5c6cb;
+            --accent-pastel: #f1b0b7;
+            --light-pastel: #fce4ec;
+            --dark-pastel: #e6a4ad;
+            --white: #ffffff;
+            --text-dark: #4a4a4a;
+            --text-light: #888888;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -63,8 +77,14 @@
         }
 
         .navbar-link.ativo {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.3);
             color: #B8375E;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
         .menu-hamburguer {
@@ -87,7 +107,6 @@
             background-color: #f8e1e7;
             color: #333;
             line-height: 1.6;
-            padding: 20px;
         }
         
         .container {
@@ -255,14 +274,6 @@
             color: #f5c6d6;
         }
         
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
-            border-top: 1px solid #f0f0f0;
-        }
-        
         @media (max-width: 768px) {
             .navbar-menu {
                 display: none;
@@ -322,17 +333,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="navbar-logo">Prio</a>
-            
-            <div class="menu-hamburguer">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-            <ul class="navbar-menu">
-                <li class="navbar-item">
-                    <a href="usuarios.html" class="navbar-link">Usuários</a>
-                </li>
+            <ul class="navbar-menu" id="navbarMenu">
                 <li class="navbar-item">
                     <a href="tarefas.html" class="navbar-link">Tarefas</a>
                 </li>
@@ -349,13 +350,16 @@
                     <a href="lembretes.html" class="navbar-link">Lembretes</a>
                 </li>
                 <li class="navbar-item">
+                    <a href="projetos.html" class="navbar-link">Projetos</a>
+                </li>
+                <li class="navbar-item">
                     <a href="habitos.html" class="navbar-link">Hábitos</a>
                 </li>
                 <li class="navbar-item">
                     <a href="etiquetas.html" class="navbar-link">Etiquetas</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="projetos.html" class="navbar-link ativo">projetos</a>
+                    <a href="comentarios.html" class="navbar-link ativo">Comentários</a>
                 </li>
                 <li class="navbar-item">
                     <a href="historico.html" class="navbar-link">Historico</a>
@@ -444,9 +448,6 @@
             </div>
         </div>
         
-        <footer>
-            <p>Sistema de Comentários &copy; 2023 - Todos os direitos reservados</p>
-        </footer>
     </div>
 </body>
 </html>
